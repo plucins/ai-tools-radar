@@ -1,2 +1,10 @@
 - Coding Agent
 - Developer Tools
+- IDE Extension
+- Code Editor
+- Code Completion
+- Code Review
+- Multi-model
+- Local Models
+- Open Source
+- Enterprise 

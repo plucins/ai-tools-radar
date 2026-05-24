@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { X, CheckCircle2 } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -17,7 +18,9 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool, mode, selected, onRemove, onToggle, disabled }: ToolCardProps) {
+  const [logoError, setLogoError] = useState(false)
   const logoProxyUrl = tool.logo ? `${API_BASE_URL}/tools/${tool.id}/logo` : undefined
+  const showLogo = Boolean(logoProxyUrl) && !logoError
 
   return (
     <motion.div
@@ -57,38 +60,51 @@ export function ToolCard({ tool, mode, selected, onRemove, onToggle, disabled }:
         )}
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2 pr-8">
-            {logoProxyUrl && (
-              <div className="h-8 w-8 shrink-0 rounded-lg border border-border/50 bg-card/80 backdrop-blur-sm flex items-center justify-center overflow-hidden p-1">
+            {/* Logo or placeholder — always circular with glow */}
+            <div
+              className={cn(
+                'relative h-9 w-9 shrink-0 rounded-full border border-primary/30 overflow-hidden flex items-center justify-center',
+                showLogo
+                  ? 'bg-card/80 backdrop-blur-sm shadow-[0_0_8px_hsl(var(--primary)/0.2)]'
+                  : 'bg-primary/10 shadow-[0_0_10px_hsl(var(--primary)/0.35)]',
+              )}
+            >
+              <div
+                className="pointer-events-none absolute inset-0 rounded-full"
+                style={{
+                  background:
+                    'radial-gradient(ellipse 80% 80% at 50% 20%, hsl(var(--primary) / 0.2) 0%, transparent 70%)',
+                }}
+                aria-hidden="true"
+              />
+              {showLogo ? (
                 <img
                   src={logoProxyUrl}
                   alt={`${tool.name} logo`}
-                  className="h-full w-full object-contain"
-                  onError={(e) => {
-                    ;(e.currentTarget.parentElement as HTMLDivElement).style.display = 'none'
-                  }}
+                  className="h-full w-full rounded-full object-cover"
+                  onError={() => setLogoError(true)}
                 />
-              </div>
-            )}
+              ) : (
+                <span className="text-sm font-bold text-primary select-none">
+                  {tool.name.charAt(0).toUpperCase()}
+                </span>
+              )}
+            </div>
+
             <h3
               className={cn(
-                'font-semibold leading-none tracking-tight',
+                'font-semibold leading-none tracking-tight truncate',
                 mode === 'slot' ? 'text-lg' : 'text-base',
               )}
             >
               {tool.name}
             </h3>
-          </div>
-          {mode === 'slot' && (
-            <Badge
-              variant="secondary"
-              className="w-fit mt-1 border border-primary/30 bg-primary/15 text-primary"
-            >
-              {tool.category}
+
+            {/* Category tag — inline with logo and name, glowing */}
+            <Badge className="ml-auto shrink-0 border border-primary/30 bg-primary/15 text-primary shadow-[0_0_6px_hsl(var(--primary)/0.3)] text-[10px] tracking-widest uppercase px-2 py-0.5">
+              {tool.category.toUpperCase()}
             </Badge>
-          )}
-          {mode === 'browser' && (
-            <p className="text-xs text-muted-foreground">{tool.category}</p>
-          )}
+          </div>
         </CardHeader>
         <CardContent>
           <p className="line-clamp-3 text-sm text-muted-foreground">{tool.description}</p>

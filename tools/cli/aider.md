@@ -7,7 +7,7 @@ description: >
   using user-selected LLM APIs or local models. It provides chat modes, repository mapping,
   automatic git commits, scripting, and optional browser, voice, and editor-adjacent workflows.
 category: cli
-logo: https://img.logo.dev/aider.chat?token=pk_&format=png&theme=dark&retina=true&fallback=404
+logo: https://img.logo.dev/placeholder?token=pk_&format=png&theme=dark&retina=true&fallback=404
 tags:
   - Coding Agent
   - Developer Tools

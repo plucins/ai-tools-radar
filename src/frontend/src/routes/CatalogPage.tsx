@@ -83,12 +83,14 @@ export function CatalogPage() {
               key={cat}
               variant={activeCategory === cat ? 'default' : 'outline'}
               className={cn(
-                'cursor-pointer',
-                activeCategory === cat && 'border border-primary/30 bg-primary/15 text-primary',
+                'cursor-pointer tracking-widest text-[10px] uppercase',
+                activeCategory === cat
+                  ? 'border border-primary/30 bg-primary/15 text-primary shadow-[0_0_6px_hsl(var(--primary)/0.3)]'
+                  : 'hover:border-primary/20 hover:bg-primary/5 hover:text-primary/80',
               )}
               onClick={() => setActiveCategory(cat)}
             >
-              {cat}
+              {cat.toUpperCase()}
             </Badge>
           ))}
         </div>
