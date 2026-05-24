@@ -4,7 +4,7 @@ Standardized section structure for AI tool profiles. Only include sections where
 
 ---
 
-## 0. Required File Header
+## Required File Header
 
 Every tool profile **must begin** with this identification JSON block as the very first content after the `# Title` heading:
 
@@ -27,7 +27,13 @@ tags:
 
 ---
 
-## 1. Tool Identification
+
+**Last update:** DD-MM-YYYY HH:mm
+
+> Populated by running `scripts/get_current_datetime.py` at the time of profile creation or update. Never hard-code or guess this value.
+
+
+## Tool Identification
 
 | Field | Description |
 |-------|-------------|
@@ -46,7 +52,7 @@ tags:
 
 ---
 
-## 2. Classification
+## Classification
 
 - Primary category (e.g., Coding Agent, IDE Assistant, CLI Tool, Automation Platform)
 - Secondary categories
@@ -57,7 +63,7 @@ tags:
 
 ---
 
-## 3. Summary
+## Summary
 
 - One-sentence description
 - Extended description (2-3 sentences)
@@ -70,7 +76,7 @@ tags:
 
 ---
 
-## 4. Use Cases
+## Use Cases
 
 - Primary use cases
 - Secondary use cases
@@ -83,7 +89,7 @@ tags:
 
 ---
 
-## 5. Features
+## Features
 
 For each feature, document:
 - Feature name
@@ -107,7 +113,7 @@ Organize features into:
 
 ---
 
-## 6. Interfaces
+## Interfaces
 
 - Interface types: Web app, Desktop app, Mobile app, CLI, IDE plugin, Browser extension, API, Webhook, SDK, Chat, Embedded widget, Background agent
 - Supported platforms
@@ -121,7 +127,7 @@ Organize features into:
 
 ---
 
-## 7. Operating Modes
+## Operating Modes
 
 For each mode, document:
 - Mode name
@@ -147,7 +153,7 @@ Possible modes:
 
 ---
 
-## 8. Architecture & Mechanisms
+## Architecture & Mechanisms
 
 - System architecture
 - Data flow
@@ -169,7 +175,7 @@ Possible modes:
 
 ---
 
-## 9. Tool Capabilities
+## Tool Capabilities
 
 For each capability, document:
 - Capability name
@@ -197,7 +203,7 @@ Capabilities to check:
 
 ---
 
-## 9a. Agent Tool Primitives
+## Agent Tool Primitives
 
 Check the official tools reference page for the complete list of named tools the model can invoke. These are implementation-level primitives — distinct from user-facing features and often documented separately under a "tools reference" or "tool-use" page.
 
@@ -214,7 +220,7 @@ Additional fields to note where relevant:
 
 ---
 
-## 10. Integrations
+## Integrations
 
 For each integration, document:
 - Integration name
@@ -238,7 +244,7 @@ Categories:
 
 ---
 
-## 11. AI Models
+## AI Models
 
 | Field | Description |
 |-------|-------------|
@@ -260,7 +266,7 @@ Information status: confirmed / partially confirmed / inferred / unknown
 
 ---
 
-## 12. Permissions & Security
+## Permissions & Security
 
 - Required permissions
 - Data access scope
@@ -287,7 +293,7 @@ Information status: confirmed / partially confirmed / inferred / unknown
 
 ---
 
-## 13. Privacy & Data Processing
+## Privacy & Data Processing
 
 - What data is transmitted
 - Where data is processed
@@ -303,7 +309,7 @@ Information status: confirmed / partially confirmed / inferred / unknown
 
 ---
 
-## 14. Limitations & Risks
+## Limitations & Risks
 
 For each risk/limitation, document:
 - Name
@@ -330,7 +336,7 @@ Categories:
 
 ---
 
-## 15. Alternatives
+## Alternatives
 
 For each alternative, document:
 - Alternative name
@@ -341,7 +347,7 @@ For each alternative, document:
 
 ---
 
-## 16. Usage Examples
+## Usage Examples
 
 - Example prompts
 - Example commands
@@ -362,7 +368,7 @@ For each example:
 
 ---
 
-## 17. Sources
+## Sources
 
 List all official sources used:
 - Official product page

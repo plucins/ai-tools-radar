@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
 import { X, CheckCircle2 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { API_BASE_URL } from '@/lib/config'
 import type { Tool } from '@/types/tool'
 
 interface ToolCardProps {
@@ -16,6 +17,8 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool, mode, selected, onRemove, onToggle, disabled }: ToolCardProps) {
+  const logoProxyUrl = tool.logo ? `${API_BASE_URL}/tools/${tool.id}/logo` : undefined
+
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
@@ -53,9 +56,28 @@ export function ToolCard({ tool, mode, selected, onRemove, onToggle, disabled }:
           <CheckCircle2 className="absolute right-2 top-2 z-10 h-5 w-5 text-primary" />
         )}
         <CardHeader className="pb-2">
-          <CardTitle className={cn('pr-8', mode === 'slot' ? 'text-lg' : 'text-base')}>
-            {tool.name}
-          </CardTitle>
+          <div className="flex items-center gap-2 pr-8">
+            {logoProxyUrl && (
+              <div className="h-8 w-8 shrink-0 rounded-lg border border-border/50 bg-card/80 backdrop-blur-sm flex items-center justify-center overflow-hidden p-1">
+                <img
+                  src={logoProxyUrl}
+                  alt={`${tool.name} logo`}
+                  className="h-full w-full object-contain"
+                  onError={(e) => {
+                    ;(e.currentTarget.parentElement as HTMLDivElement).style.display = 'none'
+                  }}
+                />
+              </div>
+            )}
+            <h3
+              className={cn(
+                'font-semibold leading-none tracking-tight',
+                mode === 'slot' ? 'text-lg' : 'text-base',
+              )}
+            >
+              {tool.name}
+            </h3>
+          </div>
           {mode === 'slot' && (
             <Badge
               variant="secondary"

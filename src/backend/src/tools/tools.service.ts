@@ -9,6 +9,7 @@ export interface Tool {
   description: string;
   category: string;
   tags: string[];
+  logo?: string;
   profilePath?: string;
   content?: string;
 }
@@ -103,6 +104,7 @@ export class ToolsService {
             tags: Array.isArray(parsed['tags'])
               ? (parsed['tags'] as string[])
               : [],
+            logo: typeof parsed['logo'] === 'string' ? parsed['logo'] : undefined,
             profilePath,
             content,
           });

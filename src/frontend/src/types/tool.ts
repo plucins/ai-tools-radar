@@ -4,6 +4,7 @@ export interface Tool {
   description: string
   category: string
   tags: string[]
+  logo?: string
   profilePath?: string
   content?: string
 }

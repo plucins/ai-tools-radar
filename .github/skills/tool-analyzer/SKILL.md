@@ -92,6 +92,26 @@ Use the section structure defined in `references/profile-template-sections.md`. 
 - Tables for: pricing plans, supported models, technical specifications, version comparisons
 - Code blocks for: example commands, API calls, configuration snippets
 
+### Get current datetime
+
+Before writing or updating any tool profile, run the following script to get the current date and time. **Never guess, assume, or hard-code a datetime — always execute this script:**
+
+```bash
+python3 .github/skills/tool-analyzer/scripts/get_current_datetime.py
+```
+
+Use the output (format: `DD-MM-YYYY HH:mm`) as the value for the `**Last update:**` line placed under the `## Tool Identification` heading, immediately before the identification table:
+
+```markdown
+## Tool Identification
+
+**Last update:** DD-MM-YYYY HH:mm
+
+| Field | Description |
+```
+
+---
+
 ### Update or create file
 
 Write the profile to the target path `tools/<category>/<tool-name-slug>.md` determined in Step 1. If updating an existing file, preserve all historical content and append new findings with a date marker:
