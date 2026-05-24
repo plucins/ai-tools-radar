@@ -18,7 +18,7 @@ description: Generate factual, evidence-based descriptions of AI tools using onl
 - Append new information to existing files — never silently overwrite previous assessments
 - Use dated changelog entries when updating existing profiles
 - Cite sources at the end of each profile
-- **Start every tool profile file with the required identification JSON block** (name, description, category, tags) as defined in `references/profile-template-sections.md` — this must be the very first content after the `# Title` heading, before any other sections
+- **Start every tool profile file with the required identification YAML block** (name, description, category, tags) as defined in `references/profile-template-sections.md` — this must be the very first content after the `# Title` heading, before any other sections
 
 ## DO NOT
 
@@ -119,7 +119,7 @@ Write the profile to the target path `tools/<category>/<tool-name-slug>.md` dete
 
 Before finalizing any tool profile, verify:
 
-1. **Identification JSON block**: File begins with a JSON code block (after the `# Title` heading) containing `name`, `description` (2–3 sentences max), `category` (matching the `tools/<category>/` folder), and `tags` (max 2, from `references/avaliable-tags.md`).
+1. **Identification YAML block**: File begins with a YAML code block (after the `# Title` heading) containing `name`, `description` (2–3 sentences max), `category` (matching the `tools/<category>/` folder), and `tags` (max 2, from `references/avaliable-tags.md`).
 2. **Source compliance**: Every claim traces to an official vendor source. No unsourced assertions exist.
 3. **No marketing language**: No superlatives, no hype words, no subjective qualifiers.
 4. **No speculation**: No sections contain inferred or assumed information. Missing data is omitted or explicitly marked.

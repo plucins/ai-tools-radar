@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router-dom'
-import { Header } from './Header'
+import { Sidebar } from '@/components/layout/Sidebar'
+import { MainContent } from '@/components/layout/MainContent'
 
 export function MainLayout() {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
+    <div className="flex h-screen overflow-hidden bg-background">
+      <Sidebar />
+      <MainContent>
         <Outlet />
-      </main>
+      </MainContent>
     </div>
   )
 }

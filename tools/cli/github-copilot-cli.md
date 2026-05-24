@@ -1,12 +1,15 @@
 # GitHub Copilot CLI
 
-```json
-{
-  "name": "GitHub Copilot CLI",
-  "description": "Terminal-based AI coding agent that autonomously creates and modifies files, executes shell commands, and interacts with GitHub.com on behalf of the user. Provides both interactive chat and programmatic single-prompt modes without requiring an IDE.",
-  "category": "cli",
-  "tags": ["Coding Agent", "Developer Tools"]
-}
+```yaml
+name: GitHub Copilot CLI
+description: >
+  Terminal-based AI coding agent that autonomously creates and modifies files, executes shell
+  commands, and interacts with GitHub.com on behalf of the user. Provides both interactive chat
+  and programmatic single-prompt modes without requiring an IDE.
+category: cli
+tags:
+  - Coding Agent
+  - Developer Tools
 ```
 
 ## Tool Identification| Field | Value |

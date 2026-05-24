@@ -2,6 +2,11 @@ import type { ComparisonRequest, ComparisonResult } from '@/types/comparison'
 import type { Tool } from '@/types/tool'
 import { API_BASE_URL } from './config'
 
+interface ApiEnvelope<T> {
+  data: T
+  timestamp: string
+}
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     headers: { 'Content-Type': 'application/json' },
@@ -13,7 +18,8 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
     throw new Error(text || `HTTP ${response.status}`)
   }
 
-  return (await response.json()) as T
+  const envelope = (await response.json()) as ApiEnvelope<T>
+  return envelope.data
 }
 
 export const api = {

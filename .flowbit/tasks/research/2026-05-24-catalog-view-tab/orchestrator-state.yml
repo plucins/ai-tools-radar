@@ -1,0 +1,92 @@
+orchestrator:
+  started_phase: phase-1
+  completed_phases: [phase-1, phase-2, phase-3, phase-4]
+  failed_phases: []
+  auto_fix_attempts:
+    phase-1: 0
+    phase-2: 0
+    phase-3: 0
+    phase-5: 0
+  options:
+    brainstorming_enabled: true
+    design_enabled: false
+  created: "2026-05-24T15:50:00+02:00"
+  updated: "2026-05-24T16:10:00+02:00"
+  task_path: .flowbit/tasks/research/2026-05-24-catalog-view-tab
+  task_ids:
+    phase-1: null
+    phase-2: null
+    phase-3: null
+    phase-4: null
+    phase-5: null
+    phase-6: null
+
+task:
+  title: "Catalog View Tab — Research"
+  description: |
+    Research how to implement a Catalog tab (/catalog) that shows all tools in a grid with
+    inline search+filter, plus a Tool Detail Page (/catalog/:id) that renders the full .md
+    profile with react-markdown.
+  status: in_progress
+  tags: [research, frontend, backend, catalog, routing]
+  priority: medium
+
+research_context:
+  research_type: "technical"
+  research_question: "How should I implement a Catalog view as a separate tab/route (/catalog) to display all available tools, with clickable cards that navigate to a full tool profile page rendering the .md file content?"
+  scope:
+    included:
+      - "Frontend routing (App.tsx, SidebarNav.tsx)"
+      - "Existing tool components (ToolCard, ToolList)"
+      - "Backend GET /tools/:id — extend with content field"
+      - "React-markdown installation and usage"
+      - "ToolProfilePage new component"
+      - "CatalogPage with inline search+filter+skeletons"
+    excluded:
+      - "Authentication"
+      - "Pagination"
+      - "Tool CRUD"
+    constraints:
+      - "Must not break EPIC 3 Groups 4-5"
+      - "shadcn/ui patterns, @/ alias, named exports"
+  confidence_level: "high"
+  phase_summaries:
+    phase-1:
+      summary: "Codebase is 80% ready for catalog. 1 new file + 1 route line for basic catalog. Full scope (detail page + react-markdown + backend content field) is well-understood."
+      steps_completed: [init, plan, gather, synthesize]
+    phase-3:
+      summary: "9 alternatives generated across 3 decision areas. Clear recommendations on all three."
+    phase-4:
+      summary: "Decisions resolved: Option B (Catalog+Detail with Markdown), 2A (Inline filter bar), 3B (Skeleton loading)"
+      decision_areas:
+        - area: "Catalog UX Mode"
+          alternatives_count: 3
+          chosen_approach: "Option B — Catalog grid + Tool Detail Page with react-markdown"
+        - area: "Filter Placement"
+          alternatives_count: 3
+          chosen_approach: "2A — Inline filter bar (search Input + category Badge pills)"
+        - area: "Loading State"
+          alternatives_count: 3
+          chosen_approach: "3B — Skeleton placeholder cards"
+      deferred_ideas:
+        - "Add to Compare quick-action (needs shared comparison context)"
+        - "URL seed params (needs ToolsPage change — EPIC 3 conflict)"
+        - "Collapsible filter panel (appropriate when 5+ filter facets)"
+        - "Infinite scroll / pagination"
+        - "Tag-based filtering"
+        - "Sort controls"
+
+options:
+  brainstorming_enabled: true
+  design_enabled: false
+
+project_context:
+  project_doc_paths:
+    - .flowbit/docs/project/vision.md
+    - .flowbit/docs/project/tech-stack.md
+    - .flowbit/docs/project/architecture.md
+    - .flowbit/docs/standards/global/coding-standards.md
+    - .flowbit/docs/standards/frontend/frontend-standards.md
+    - .flowbit/docs/standards/backend/backend-standards.md
+    - .flowbit/docs/standards/testing/testing-standards.md
+    - .flowbit/docs/standards/tools/tool-profile-standards.md

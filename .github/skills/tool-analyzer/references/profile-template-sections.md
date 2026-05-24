@@ -8,13 +8,14 @@ Standardized section structure for AI tool profiles. Only include sections where
 
 Every tool profile **must begin** with this identification JSON block as the very first content after the `# Title` heading:
 
-```json
-{
-  "name": "<Official product name>",
-  "description": "<2–3 sentences on the essence of the tool. No more.>",
-  "category": "<folder name under tools/ where this file lives, e.g. cli, ide, plugin>",
-  "tags": ["<tag1>", "<tag2>"]
-}
+```yaml
+name: "<Official product name>"
+description: >
+  <2–3 sentences on the essence of the tool. No more.>
+category: <folder name under tools/ where this file lives, e.g. cli, ide, plugin>
+tags:
+  - <tag1>
+  - <tag2>
 ```
 
 **Rules:**

@@ -1,12 +1,15 @@
 # OpenCode
 
-```json
-{
-  "name": "OpenCode",
-  "description": "Open-source AI coding agent available as a terminal UI, desktop app, and IDE extension with support for 75+ LLM providers. Fully MIT-licensed with granular permission controls and no vendor lock-in.",
-  "category": "cli",
-  "tags": ["Coding Agent", "Developer Tools"]
-}
+```yaml
+name: OpenCode
+description: >
+  Open-source AI coding agent available as a terminal UI, desktop app, and IDE extension with
+  support for 75+ LLM providers. Fully MIT-licensed with granular permission controls and no
+  vendor lock-in.
+category: cli
+tags:
+  - Coding Agent
+  - Developer Tools
 ```
 
 ## Tool Identification| Field | Value |
