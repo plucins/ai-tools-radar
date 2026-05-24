@@ -10,6 +10,7 @@ export interface Tool {
   category: string;
   tags: string[];
   profilePath?: string;
+  content?: string;
 }
 
 export const TOOLS_ROOT = 'TOOLS_ROOT';
@@ -103,6 +104,7 @@ export class ToolsService {
               ? (parsed['tags'] as string[])
               : [],
             profilePath,
+            content,
           });
         } catch (err) {
           this.logger.warn(

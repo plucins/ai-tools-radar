@@ -7,11 +7,12 @@ interface SidebarNavItemProps {
   to: string
   label: string
   icon: LucideIcon
+  end?: boolean
 }
 
-export function SidebarNavItem({ to, label, icon: Icon }: SidebarNavItemProps) {
+export function SidebarNavItem({ to, label, icon: Icon, end = true }: SidebarNavItemProps) {
   return (
-    <NavLink to={to} end>
+    <NavLink to={to} end={end}>
       {({ isActive }) => (
         <motion.div
           whileHover={{ scale: 1.02 }}

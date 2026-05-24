@@ -5,6 +5,7 @@ export interface Tool {
   category: string
   tags: string[]
   profilePath?: string
+  content?: string
 }
 
 export interface ToolSummary {
