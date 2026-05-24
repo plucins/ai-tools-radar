@@ -101,3 +101,17 @@ fabric.properties
 # Ignore all local history of files
 .history
 .ionide
+
+# Node / NestJS
+node_modules/
+dist/
+build/
+
+# Environment files — never commit real credentials
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
