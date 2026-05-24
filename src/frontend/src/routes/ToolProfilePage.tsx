@@ -98,7 +98,7 @@ export function ToolProfilePage() {
             prose-th:text-foreground prose-td:text-muted-foreground
             prose-hr:border-border/50">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {tool.content ?? ''}
+              {(tool.content ?? '').replace(/```yaml\n[\s\S]*?\n```\n?/, '')}
             </ReactMarkdown>
           </div>
         </div>
