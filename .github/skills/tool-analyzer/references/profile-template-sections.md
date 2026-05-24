@@ -28,7 +28,7 @@ tags:
 ---
 
 
-**Last update:** DD-MM-YYYY HH:mm
+**Last document update:** DD-MM-YYYY HH:mm
 
 > Populated by running `scripts/get_current_datetime.py` at the time of profile creation or update. Never hard-code or guess this value.
 
