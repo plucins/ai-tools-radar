@@ -13,11 +13,11 @@ A full-stack web application for discovering and comparing AI developer tools. B
 The AI tooling landscape changes fast. Vendor marketing is noisy, and hands-on evaluation takes time. AI Tools Radar solves this by maintaining **evidence-based Markdown profiles** for each tool and enabling **on-demand structured comparisons** powered by a local LLM.
 
 **Key features:**
-- 🗂 **Tool Catalog** — Browse AI developer tools by category (`cli/`, `ide/`, `agent/`, …)
-- ⚖️ **Multi-Tool Comparison** — Select 2+ tools and get a structured LLM-generated breakdown
-- 🔒 **Local-First** — Comparisons run via [Ollama](https://ollama.com); nothing leaves your machine
-- 🧪 **Mock Mode** — Run and develop without Ollama installed (`LLM_MODE=mock`)
-- 📝 **Markdown-Driven Data** — Add a tool by dropping a `.md` file; no backend code changes needed
+- **Tool Catalog** — Browse AI developer tools by category (`cli/`, `ide/`, `agent/`, …)
+- **Multi-Tool Comparison** — Select 2+ tools and get a structured LLM-generated breakdown
+- **Local-First** — Comparisons run via [Ollama](https://ollama.com); nothing leaves your machine
+- **Mock Mode** — Run and develop without Ollama installed (`LLM_MODE=mock`)
+- **Markdown-Driven Data** — Add a tool by dropping a `.md` file; no backend code changes needed
 
 ---
 
