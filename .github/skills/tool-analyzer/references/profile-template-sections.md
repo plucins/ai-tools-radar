@@ -4,6 +4,26 @@ Standardized section structure for AI tool profiles. Only include sections where
 
 ---
 
+## 0. Required File Header
+
+Every tool profile **must begin** with this identification JSON block as the very first content after the `# Title` heading:
+
+```json
+{
+  "name": "<Official product name>",
+  "description": "<2–3 sentences on the essence of the tool. No more.>",
+  "category": "<folder name under tools/ where this file lives, e.g. cli, ide, plugin>",
+  "tags": ["<tag1>", "<tag2>"]
+}
+```
+
+**Rules:**
+- Description is strictly 2–3 sentences. Do not exceed this.
+- Category must exactly match the `tools/<category>/` folder where the file is placed.
+- Tags: choose at most 2 from the approved list in `references/avaliable-tags.md`. Do not invent new tags.
+
+---
+
 ## 1. Tool Identification
 
 | Field | Description |

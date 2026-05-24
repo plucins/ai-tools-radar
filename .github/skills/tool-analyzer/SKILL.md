@@ -18,6 +18,7 @@ description: Generate factual, evidence-based descriptions of AI tools using onl
 - Append new information to existing files — never silently overwrite previous assessments
 - Use dated changelog entries when updating existing profiles
 - Cite sources at the end of each profile
+- **Start every tool profile file with the required identification JSON block** (name, description, category, tags) as defined in `references/profile-template-sections.md` — this must be the very first content after the `# Title` heading, before any other sections
 
 ## DO NOT
 
@@ -118,12 +119,13 @@ Write the profile to the target path `tools/<category>/<tool-name-slug>.md` dete
 
 Before finalizing any tool profile, verify:
 
-1. **Source compliance**: Every claim traces to an official vendor source. No unsourced assertions exist.
-2. **No marketing language**: No superlatives, no hype words, no subjective qualifiers.
-3. **No speculation**: No sections contain inferred or assumed information. Missing data is omitted or explicitly marked.
-4. **Structural compliance**: Sections follow the template structure from `references/profile-template-sections.md`.
-5. **Factual precision**: Numbers, versions, dates, and specifications are concrete and verifiable.
-6. **Historical preservation**: If updating an existing file, previous information is preserved (not overwritten).
-7. **Source citations**: All sources are listed at the end of the profile with URLs.
-8. **File location**: Output file is placed in `tools/<category>/` where `<category>` matches the tool's primary classification determined in Step 1. If a new category folder was created, it uses a lowercase hyphenated name.
-9. **Agent tools coverage** *(for agentic tools only)*: If the tool exposes an official tools reference page, confirm that named internal tools (e.g., `TaskList`, `Bash`, `Edit`) are covered in the Tool Capabilities section — not just the user-facing feature list. Missing this layer is a common gap.
+1. **Identification JSON block**: File begins with a JSON code block (after the `# Title` heading) containing `name`, `description` (2–3 sentences max), `category` (matching the `tools/<category>/` folder), and `tags` (max 2, from `references/avaliable-tags.md`).
+2. **Source compliance**: Every claim traces to an official vendor source. No unsourced assertions exist.
+3. **No marketing language**: No superlatives, no hype words, no subjective qualifiers.
+4. **No speculation**: No sections contain inferred or assumed information. Missing data is omitted or explicitly marked.
+5. **Structural compliance**: Sections follow the template structure from `references/profile-template-sections.md`.
+6. **Factual precision**: Numbers, versions, dates, and specifications are concrete and verifiable.
+7. **Historical preservation**: If updating an existing file, previous information is preserved (not overwritten).
+8. **Source citations**: All sources are listed at the end of the profile with URLs.
+9. **File location**: Output file is placed in `tools/<category>/` where `<category>` matches the tool's primary classification determined in Step 1. If a new category folder was created, it uses a lowercase hyphenated name.
+10. **Agent tools coverage** *(for agentic tools only)*: If the tool exposes an official tools reference page, confirm that named internal tools (e.g., `TaskList`, `Bash`, `Edit`) are covered in the Tool Capabilities section — not just the user-facing feature list. Missing this layer is a common gap.

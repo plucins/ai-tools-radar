@@ -1,6 +1,16 @@
 # Claude Code
 
+```json
+{
+  "name": "Claude Code",
+  "description": "Agentic coding assistant with full codebase understanding, autonomous multi-step execution, and deep tool integration — available in terminal, IDEs, desktop, and web.",
+  "category": "cli",
+  "tags": ["Coding Agent", "Developer Tools"]
+}
+```
+
 ## Tool Identification
+
 
 | Field | Description |
 |-------|-------------|
