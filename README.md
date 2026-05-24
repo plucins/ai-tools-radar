@@ -29,10 +29,10 @@ ai-tools-radar/
 │   ├── backend/        # NestJS REST API (port 3000)
 │   └── frontend/       # React SPA (port 5173)
 └── tools/
-    └── cli/            # Tool profiles (Markdown)
-        ├── claude-code.md
-        ├── github-copilot-cli.md
-        └── opencode.md
+    ├── cli/            # CLI coding agents and terminal tools
+    ├── ide/            # IDE extensions and AI-first editors
+    ├── plugin/         # CI/CD and code review plugins
+    └── webapp/         # Browser-based AI tools
 ```
 
 ---
