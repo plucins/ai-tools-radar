@@ -13,7 +13,8 @@ description: Generate factual, evidence-based descriptions of AI tools using onl
 - Follow the section structure from the tool profile template (`references/profile-template-sections.md`)
 - Omit entire sections when official sources do not provide information
 - Mark uncertain information with `[UNVERIFIED]`, `[NEEDS UPDATE]`, or `[ESTIMATED]`
-- Check if a file for the tool already exists in the `tools/` directory before creating a new one
+- Classify the tool's primary category first (see Workflow Step 1) and determine the correct `tools/<category>/` subfolder before creating or locating any file
+- Check if a file for the tool already exists at the target path before creating a new one
 - Append new information to existing files — never silently overwrite previous assessments
 - Use dated changelog entries when updating existing profiles
 - Cite sources at the end of each profile
@@ -38,14 +39,34 @@ You are an AI and technology tools expert specializing in producing precise, fac
 
 ## Workflow
 
-### 1. Check existing file
+### Classify tool category
 
-Before starting analysis, check if a dedicated file for the tool already exists in the `tools/` directory of the workspace.
+Before creating or locating any file, determine the tool's primary category based on its dominant interaction model and deployment context. A tool may span multiple categories — select the **one** it is most purpose-built for.
 
-- If the file **does not exist**: create a new file named `<tool-name-slug>.md` in `tools/`
+**Category classification rules:**
+
+| Category folder | Use when the tool's primary interface or deployment is... |
+|-----------------|-----------------------------------------------------------|
+| `cli/`          | A terminal / command-line interface (invoked as a shell command, no persistent GUI) |
+| `ide/`          | Embedded inside an IDE or code editor (VS Code extension, JetBrains plugin functioning as a full IDE product, standalone AI-first editor like Cursor or Windsurf) |
+| `plugin/`       | A plugin or extension that adds AI capabilities to an existing non-IDE tool (e.g., browser extension, CI/CD plugin, Slack bot, Jira plugin) |
+
+**Multi-category tools:** If a tool has both a CLI and an IDE integration (e.g., it ships a VS Code extension *and* a terminal agent), classify by **which mode its documentation and marketing primarily target**. Record secondary categories in the profile's Classification section.
+
+**New category:** If the tool does not fit any existing folder, create a new subfolder under `tools/` with a lowercase hyphenated name (e.g., `tools/api-gateway/`, `tools/automation-platform/`). Only create a new category if none of the existing ones is a reasonable primary fit.
+
+**Determine the target path:** `tools/<category>/<tool-name-slug>.md`
+
+---
+
+### Check existing file
+
+Before starting analysis, check if a dedicated file for the tool already exists at the target path determined in Step 1.
+
+- If the file **does not exist**: create a new file at `tools/<category>/<tool-name-slug>.md`
 - If the file **already exists**: update it with newly discovered information, updated specifications, and changes from changelogs or documentation. Use dated sections for changes.
 
-### 2. Research from official sources
+### Research from official sources
 
 Gather information from these source types only (in priority order):
 
@@ -59,20 +80,20 @@ Gather information from these source types only (in priority order):
 
 Read `references/research-topics.md` for the full list of research areas to investigate.
 
-### 3. Structure the profile
+### Structure the profile
 
 Use the section structure defined in `references/profile-template-sections.md`. Only include sections where official data is available. Do not create empty or speculative sections.
 
-### 4. Format output
+### Format output
 
 - Markdown headings for sections
 - Bullet lists for: features, integrations, limitations, capabilities
 - Tables for: pricing plans, supported models, technical specifications, version comparisons
 - Code blocks for: example commands, API calls, configuration snippets
 
-### 5. Update or create file
+### Update or create file
 
-Write the profile to the appropriate file in `tools/`. If updating an existing file, preserve all historical content and append new findings with a date marker:
+Write the profile to the target path `tools/<category>/<tool-name-slug>.md` determined in Step 1. If updating an existing file, preserve all historical content and append new findings with a date marker:
 
 ```markdown
 ## Changelog
@@ -104,5 +125,5 @@ Before finalizing any tool profile, verify:
 5. **Factual precision**: Numbers, versions, dates, and specifications are concrete and verifiable.
 6. **Historical preservation**: If updating an existing file, previous information is preserved (not overwritten).
 7. **Source citations**: All sources are listed at the end of the profile with URLs.
-8. **File location**: Output file is in `tools/` directory with correct slug naming.
+8. **File location**: Output file is placed in `tools/<category>/` where `<category>` matches the tool's primary classification determined in Step 1. If a new category folder was created, it uses a lowercase hyphenated name.
 9. **Agent tools coverage** *(for agentic tools only)*: If the tool exposes an official tools reference page, confirm that named internal tools (e.g., `TaskList`, `Bash`, `Edit`) are covered in the Tool Capabilities section — not just the user-facing feature list. Missing this layer is a common gap.
