@@ -61,21 +61,20 @@ export function ToolProfilePage() {
 
       {!loading && !error && tool && (
         <div className="bg-card/40 backdrop-blur-sm border border-border/50 rounded-3xl p-8 shadow-[0_0_20px_hsl(var(--primary)/0.1)]">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            className="prose prose-invert max-w-none
-              prose-headings:text-foreground
-              prose-p:text-muted-foreground
-              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-foreground
-              prose-code:text-primary prose-code:bg-primary/10 prose-code:rounded prose-code:px-1
-              prose-pre:bg-card/80 prose-pre:border prose-pre:border-border/50
-              prose-blockquote:border-primary/40 prose-blockquote:text-muted-foreground
-              prose-th:text-foreground prose-td:text-muted-foreground
-              prose-hr:border-border/50"
-          >
-            {tool.content ?? ''}
-          </ReactMarkdown>
+          <div className="prose prose-invert max-w-none
+            prose-headings:text-foreground
+            prose-p:text-muted-foreground
+            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+            prose-strong:text-foreground
+            prose-code:text-primary prose-code:bg-primary/10 prose-code:rounded prose-code:px-1
+            prose-pre:bg-card/80 prose-pre:border prose-pre:border-border/50
+            prose-blockquote:border-primary/40 prose-blockquote:text-muted-foreground
+            prose-th:text-foreground prose-td:text-muted-foreground
+            prose-hr:border-border/50">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {tool.content ?? ''}
+            </ReactMarkdown>
+          </div>
         </div>
       )}
     </div>
