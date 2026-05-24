@@ -40,6 +40,15 @@ export default {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
       },
+      keyframes: {
+        'glow-pulse': {
+          '0%, 100%': { boxShadow: '0 0 12px hsl(var(--primary) / 0.25)' },
+          '50%': { boxShadow: '0 0 24px hsl(var(--primary) / 0.5)' },
+        },
+      },
+      animation: {
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

@@ -20,14 +20,15 @@ interface EmptySlotProps {
 function EmptySlot({ slotNumber, onClick }: EmptySlotProps): React.ReactElement {
   return (
     <div
-      className="border-2 border-dashed border-border/50 rounded-xl min-h-[180px] flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-border/80 transition-colors"
+      className="flex min-h-[280px] w-[220px] shrink-0 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/25 bg-card/20 transition-colors hover:border-primary/50 hover:bg-card/40"
       onClick={onClick}
       role="button"
       aria-label={`Add a tool to slot ${slotNumber} of 5`}
     >
-      <Plus className="h-6 w-6 text-muted-foreground" />
+      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/40 bg-primary/10">
+        <Plus className="h-5 w-5 text-primary/70" aria-hidden="true" />
+      </div>
       <span className="text-sm text-muted-foreground">Add a tool</span>
-      <span className="text-xs text-muted-foreground/60">Slot {slotNumber} of 5</span>
     </div>
   )
 }
@@ -42,7 +43,7 @@ export function ToolSlotGrid({
   const slots: (Tool | null)[] = Array.from({ length: 5 }, (_, i) => selectedTools[i] ?? null)
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex gap-5 overflow-x-auto pb-2">
       <AnimatePresence mode="popLayout">
         {slots.map((tool, i) => (
           <motion.div
@@ -50,11 +51,12 @@ export function ToolSlotGrid({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
+            className="shrink-0"
           >
             {tool !== null ? (
               <ToolCard tool={tool} mode="slot" onRemove={onRemove} />
             ) : loading ? (
-              <Skeleton className="h-[180px] w-full rounded-xl" />
+              <Skeleton className="h-[280px] w-[220px] rounded-2xl" />
             ) : (
               <EmptySlot slotNumber={i + 1} onClick={onOpenModal} />
             )}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus } from 'lucide-react'
+import { Plus, Sparkles } from 'lucide-react'
 import { ComparisonPanel } from '@/components/comparison/ComparisonPanel'
 import type { ComparisonStage } from '@/components/comparison/ComparisonPanel'
 import { AddToolModal } from '@/components/tools/AddToolModal'
@@ -81,21 +81,17 @@ export function ToolsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
-      {/* Hero block */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">AI Tools Radar</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Select up to 5 tools to compare with AI analysis
-          </p>
-        </div>
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          disabled={selectedIds.size >= 5}
-        >
-          <Plus className="mr-2 h-4 w-4" /> Add Tool
-        </Button>
+    <div className="space-y-10">
+      {/* Centered hero header */}
+      <div className="flex flex-col items-center gap-4 text-center pt-4">
+        <Sparkles className="h-8 w-8 text-primary" aria-hidden="true" />
+        <h1 className="text-5xl font-bold tracking-tight text-foreground">
+          Compare AI Developer Tools
+        </h1>
+        <p className="max-w-lg text-base text-muted-foreground">
+          Select tools to compare and get an AI-powered analysis based on real-world capabilities,
+          features, and developer experience.
+        </p>
       </div>
 
       {/* Error alert */}
@@ -116,10 +112,22 @@ export function ToolsPage() {
 
       {/* Slot grid — rendered immediately; slots show Skeleton while loading */}
       {(loading || tools.length > 0) && (
-        <div>
-          <p className="text-sm text-muted-foreground mb-3">
-            Selected tools ({selectedIds.size}/5)
-          </p>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-foreground">
+              Selected tools ({selectedIds.size}/5)
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsModalOpen(true)}
+              disabled={selectedIds.size >= 5}
+              className="border-dashed border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary"
+            >
+              <Plus className="mr-1.5 h-4 w-4" />
+              Add Tool
+            </Button>
+          </div>
           <ToolSlotGrid
             tools={tools}
             selectedTools={selectedTools}
