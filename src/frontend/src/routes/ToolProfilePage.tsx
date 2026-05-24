@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Copy, Check } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Button } from '@/components/ui/button'
@@ -15,6 +15,14 @@ export function ToolProfilePage() {
   const [tool, setTool] = useState<Tool | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  async function handleCopy(): Promise<void> {
+    if (!tool?.content) return
+    await navigator.clipboard.writeText(tool.content)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   useEffect(() => {
     if (!id) return
@@ -33,15 +41,33 @@ export function ToolProfilePage() {
 
   return (
     <div className="space-y-6">
-      <Button
-        variant="ghost"
-        className="gap-2 text-muted-foreground hover:text-foreground"
-        onClick={() => navigate('/catalog')}
-        aria-label="Back to catalog"
-      >
-        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        Back to Catalog
-      </Button>
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          className="gap-2 text-muted-foreground hover:text-foreground"
+          onClick={() => navigate('/catalog')}
+          aria-label="Back to catalog"
+        >
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          Back to Catalog
+        </Button>
+
+        {!loading && !error && tool && (
+          <Button
+            variant="outline"
+            className="gap-2 border-border/50 text-muted-foreground hover:text-foreground"
+            onClick={handleCopy}
+            aria-label="Copy Markdown to clipboard"
+          >
+            {copied ? (
+              <Check className="h-4 w-4 text-green-500" aria-hidden="true" />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden="true" />
+            )}
+            {copied ? 'Copied!' : 'Copy Markdown'}
+          </Button>
+        )}
+      </div>
 
       {loading && (
         <div className="space-y-4">
