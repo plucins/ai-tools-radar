@@ -108,15 +108,11 @@ import { Button } from '../../../components/ui/button'
 
 ## Styling Conventions
 
-- Use **Tailwind utility classes** directly in JSX; avoid separate CSS files except for global resets.
-- Design language: dark navy/black backgrounds, purple/electric-blue accents, glassmorphism panels, soft glow effects, large rounded corners (`18px–32px`).
-- Color palette reference (see `docs/front-look-and-feel.md`):
-  - Background: `#020617`, `#030712`, `#081120`
-  - Purple: `#8B5CF6`, `#7C3AED`, `#A855F7`
-  - Blue: `#3B82F6`, `#2563EB`
-  - Text primary: `#FFFFFF`; secondary: `#9CA3AF`
-- Use `cn()` (clsx + tailwind-merge) for conditional class composition.
-- No hard-coded pixel sizes in Tailwind classes if a spacing-scale token covers the need.
+- Use **Tailwind utility classes** directly in JSX; avoid separate CSS files except for global resets in `index.css`.
+- Design language: dark navy/black backgrounds, purple/electric-blue accents, glassmorphism panels, soft glow effects, large rounded corners.
+- Use `cn()` (clsx + tailwind-merge) for all conditional class composition.
+- No hard-coded pixel sizes in Tailwind classes when a spacing-scale token covers the need.
+- The app is permanently dark-mode: `<html class="dark">` is set in `index.html`. There is no light mode variant.
 
 ### Tailwind CSS Variable Tokens — Never Raw Color Values
 Use Tailwind utility classes backed by CSS custom properties (e.g., `bg-background`, `text-foreground`, `border-border`). Never hardcode color values. Dark mode is class-based (`darkMode: ['class']`).
@@ -131,20 +127,178 @@ Use Tailwind utility classes backed by CSS custom properties (e.g., `bg-backgrou
 - **Confidence**: 84 (config)
 
 ### UI Aesthetic — Glassmorphic Dark Interface
-The intended UI style is a dark, glassmorphic interface. Use:
-- backdrop blur (`backdrop-blur-*`)
-- radial gradients with low opacity
-- low-opacity borders
-- dark translucent layer backgrounds
-- layered glow/neon accent effects
 
-Avoid: bright flat colors, sharp edges, heavy box shadows, skeuomorphic styling.
-- **Source**: `docs/front-look-and-feel.md`
-- **Confidence**: 87 (docs)
+The app uses a premium dark glassmorphic visual language. All new components and pages must follow these rules.
 
-### Use Framer Motion for Animations
-For UI animations and transitions, use Framer Motion. This is the recommended animation library per the project's design guidance (`docs/front-look-and-feel.md`).
-- **Confidence**: 82 (docs)
+#### Color Palette (CSS variable tokens)
+
+All colors are defined as CSS custom properties in `index.css` and consumed through Tailwind tokens. Never use raw hex or hsl values in classNames.
+
+| Token | HSL | Approx hex | Usage |
+|---|---|---|---|
+| `--background` | 222 84% 5% | `#020617` | App body / base layer |
+| `--card` | 222 47% 9% | `~#0d1526` | Card / panel backgrounds |
+| `--primary` | 258 90% 66% | `#8B5CF6` | Purple accent — active states, badges, glows, CTAs |
+| `--muted-foreground` | 220 9% 64% | `#9CA3AF` | Secondary/muted text |
+| `--foreground` | 0 0% 100% | `#FFFFFF` | Primary text |
+| `--border` | 258 30% 18% | `~#2a1f40` | Borders (purple-tinted) |
+
+Blue accent (`blue-600` / `#2563EB`) is used only in CTA gradient buttons paired with `--primary`.
+Green (`#10B981`) is reserved for status indicators (online dots, success states).
+
+```tsx
+// ✅ Correct
+<div className="bg-background text-foreground border border-border/50">
+<span className="text-primary">active</span>
+
+// ❌ Wrong — raw colors
+<div style={{ backgroundColor: '#020617' }}>
+<div className="text-[#8B5CF6]">
+```
+
+#### Corner Radius
+
+- **Cards** (`ToolCard`, `SidebarModelStatus`, etc.): `rounded-2xl` (24px)
+- **Containers / full-page panels** (`MainContent`, `ComparisonPanel`): `rounded-3xl` (32px)
+- **CTA buttons**: `rounded-full` (pill shape)
+- **Regular action buttons**: `rounded-lg` (uses `--radius: 1.25rem` = 20px)
+- **Badges / pills**: `rounded-full`
+
+Never use `rounded-md` or `rounded-sm` for primary UI surfaces.
+
+#### Backgrounds & Glassmorphism
+
+Glass panels combine a translucent background with backdrop blur and a subtle border:
+
+```tsx
+// ✅ Glassmorphism panel
+<div className="bg-card/40 backdrop-blur-sm border border-border/50 rounded-3xl">
+
+// ✅ Card surface
+<Card className="bg-card/60 backdrop-blur-sm border-border/50">
+
+// ✅ Active/highlighted state
+<div className="bg-primary/10 border border-primary/30">
+```
+
+The app body has a subtle radial glow bloom (defined in `index.css` as a `background-image` on `body`). Individual panels may add their own radial glow with an absolutely-positioned overlay div:
+
+```tsx
+<div className="relative overflow-hidden rounded-3xl ...">
+  <div
+    className="pointer-events-none absolute inset-0"
+    style={{
+      background: 'radial-gradient(ellipse 80% 60% at 50% 50%, hsl(var(--primary) / 0.15) 0%, transparent 70%)',
+    }}
+    aria-hidden="true"
+  />
+  {/* panel content */}
+</div>
+```
+
+#### Shadows & Glow Effects
+
+Use soft neon glow via `shadow-[...]` arbitrary values. No hard drop shadows.
+
+| Use case | Class |
+|---|---|
+| Card subtle glow | `shadow-[0_0_20px_hsl(var(--primary)/0.1)]` |
+| Active nav item | `shadow-[0_0_12px_hsl(var(--primary)/0.15)]` |
+| Main content container | `shadow-[0_0_60px_hsl(var(--primary)/0.08),inset_0_0_0_1px_hsl(var(--primary)/0.06)]` |
+| CTA panel | `shadow-[0_0_80px_hsl(var(--primary)/0.2)]` |
+| CTA button (ready state) | `shadow-[0_0_40px_hsl(var(--primary)/0.45)]` |
+| CTA button hover | `shadow-[0_0_60px_hsl(var(--primary)/0.6)]` |
+
+#### Borders
+
+All borders are thin and semi-transparent:
+- Standard: `border border-border/50`
+- Glass panel: `border border-border/40`
+- Active/selected: `border border-primary/30` to `border-primary/40`
+- Dashed empty slots: `border-2 border-dashed border-primary/25` (hover: `border-primary/50`)
+
+Never use solid opaque borders.
+
+#### CTA Button Pattern
+
+The primary call-to-action uses a gradient pill button, not a shadcn `Button`:
+
+```tsx
+<button
+  onClick={onAction}
+  className="flex h-14 w-full max-w-xs items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-blue-600 px-8 font-semibold text-white shadow-[0_0_40px_hsl(var(--primary)/0.45)] transition-all hover:shadow-[0_0_60px_hsl(var(--primary)/0.6)] hover:scale-105 active:scale-100"
+>
+  <Sparkles className="h-4 w-4" />
+  Action Label
+</button>
+```
+
+CTA panels must also include a footer: lock icon + "Private & Local • Powered by Ollama" in `text-xs text-muted-foreground/70`.
+
+#### Navigation Item Pattern
+
+Active nav item: `h-14 rounded-xl border border-primary/30 bg-primary/10 text-primary shadow-[0_0_12px_hsl(var(--primary)/0.15)]`
+Inactive nav item: `h-14 rounded-xl text-muted-foreground hover:bg-muted/50 hover:text-foreground`
+
+#### Badge / Category Pill Pattern
+
+Category badges on tool cards use purple tinting:
+```tsx
+<Badge className="border border-primary/30 bg-primary/15 text-primary">
+  {category}
+</Badge>
+```
+
+Non-category tags use the muted secondary surface: `bg-secondary text-secondary-foreground rounded-full`.
+
+#### Status Indicator
+
+Online/active: `h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_6px_#10B981]`
+Offline: `h-2.5 w-2.5 rounded-full bg-muted-foreground`
+
+### Framer Motion — Animation Conventions
+
+All UI animations use Framer Motion. Do not use CSS transitions for interactive element feedback except for simple color/opacity changes.
+
+#### Interactive card / item hover pattern
+
+```tsx
+<motion.div
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  transition={{ duration: 0.15 }}
+>
+  {/* card content */}
+</motion.div>
+```
+
+#### List enter/exit animations
+
+Use `AnimatePresence` with `mode="popLayout"` for lists where items can be added or removed:
+
+```tsx
+<AnimatePresence mode="popLayout">
+  {items.map((item) => (
+    <motion.div
+      key={item.id}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
+      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
+    >
+      ...
+    </motion.div>
+  ))}
+</AnimatePresence>
+```
+
+#### Color / shadow transitions
+
+Simple hover color changes (border, background, glow) can use Tailwind's `transition-colors` or `transition-all` with a Framer Motion wrapper:
+```tsx
+className="transition-colors hover:border-primary/50 hover:bg-card/40"
+```
+
+Avoid `transition-all` on elements with box-shadow glow — use Framer Motion `animate` instead to prevent performance issues.
 
 ## Data Fetching & Async State
 
