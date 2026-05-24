@@ -12,7 +12,9 @@ tags:
   - Developer Tools
 ```
 
-## Tool Identification| Field | Value |
+## Tool Identification
+
+| Field | Value |
 |-------|-------|
 | Name | OpenCode |
 | Alternative names | — |

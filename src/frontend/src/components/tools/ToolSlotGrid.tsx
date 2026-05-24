@@ -20,7 +20,7 @@ interface EmptySlotProps {
 function EmptySlot({ slotNumber, onClick }: EmptySlotProps): React.ReactElement {
   return (
     <div
-      className="flex min-h-[280px] w-[220px] shrink-0 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/25 bg-card/20 transition-colors hover:border-primary/50 hover:bg-card/40"
+      className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/25 bg-card/20 py-10 transition-colors hover:border-primary/50 hover:bg-card/40"
       onClick={onClick}
       role="button"
       aria-label={`Add a tool to slot ${slotNumber} of 5`}
@@ -47,7 +47,7 @@ export function ToolSlotGrid({
   ]
 
   return (
-    <div className="flex gap-5 overflow-x-auto px-2 py-3">
+    <div className="flex flex-wrap gap-5 px-2 py-3">
       <AnimatePresence mode="popLayout">
         {slots.map((tool, i) => (
           <motion.div
@@ -55,12 +55,12 @@ export function ToolSlotGrid({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
-            className="shrink-0"
+            className="flex-1 min-w-[200px]"
           >
             {tool !== null ? (
               <ToolCard tool={tool} mode="slot" onRemove={onRemove} />
             ) : loading ? (
-              <Skeleton className="h-[280px] w-[220px] rounded-2xl" />
+              <Skeleton className="h-40 w-full rounded-2xl" />
             ) : (
               <EmptySlot slotNumber={i + 1} onClick={onOpenModal} />
             )}

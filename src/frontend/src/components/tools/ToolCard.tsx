@@ -29,7 +29,7 @@ export function ToolCard({ tool, mode, selected, onRemove, onToggle, disabled }:
       <Card
         className={cn(
           'relative bg-card/60 backdrop-blur-sm border-border/50',
-          mode === 'slot' && 'min-h-[280px] w-[220px] shadow-[0_0_20px_hsl(var(--primary)/0.1)]',
+          mode === 'slot' && 'w-full shadow-[0_0_20px_hsl(var(--primary)/0.1)]',
           (mode === 'slot' || selected) &&
             'ring-1 ring-primary/40 shadow-[0_0_20px_hsl(var(--primary)/0.15)]',
         )}
