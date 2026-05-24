@@ -40,10 +40,14 @@ export function ToolSlotGrid({
   onRemove,
   onOpenModal,
 }: ToolSlotGridProps): React.ReactElement {
-  const slots: (Tool | null)[] = Array.from({ length: 5 }, (_, i) => selectedTools[i] ?? null)
+  // Show selected tools + exactly one empty/loading placeholder (unless 5 are already selected)
+  const slots: (Tool | null)[] = [
+    ...selectedTools,
+    ...(selectedTools.length < 5 ? [null] : []),
+  ]
 
   return (
-    <div className="flex gap-5 overflow-x-auto pb-2">
+    <div className="flex gap-5 overflow-x-auto px-2 py-3">
       <AnimatePresence mode="popLayout">
         {slots.map((tool, i) => (
           <motion.div

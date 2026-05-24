@@ -83,7 +83,7 @@ export function AddToolModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onClose() }}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-4xl">
         <DialogHeader>
           <DialogTitle>Add Tools</DialogTitle>
           <DialogDescription>Select tools to compare (max 5 total)</DialogDescription>
@@ -114,7 +114,7 @@ export function AddToolModal({
           ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 max-h-[50vh] overflow-y-auto">
+        <div className="max-h-[50vh] overflow-y-auto p-2">
           {filteredTools.length === 0 ? (
             <div className="col-span-full">
               <EmptyState
