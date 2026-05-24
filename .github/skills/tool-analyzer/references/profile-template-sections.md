@@ -13,6 +13,7 @@ name: "<Official product name>"
 description: >
   <2–3 sentences on the essence of the tool. No more.>
 category: <folder name under tools/ where this file lives, e.g. cli, ide, plugin>
+logo: https://img.logo.dev/<vendor-domain>?token=pk_&format=png&theme=dark&retina=true&fallback=404
 tags:
   - <tag1>
   - <tag2>
@@ -21,6 +22,7 @@ tags:
 **Rules:**
 - Description is strictly 2–3 sentences. Do not exceed this.
 - Category must exactly match the `tools/<category>/` folder where the file is placed.
+- Logo must be a logo.dev URL in the format `https://img.logo.dev/<vendor-domain>?token=pk_&format=png&theme=dark&retina=true&fallback=404`. Use the vendor's primary domain. Set to `null` if no vendor domain is available.
 - Tags: choose at most 2 from the approved list in `references/avaliable-tags.md`. Do not invent new tags.
 
 ---

@@ -23,13 +23,14 @@ export function ToolCard({ tool, mode, selected, onRemove, onToggle, disabled }:
       transition={{ duration: 0.15 }}
       className={cn(
         mode === 'browser' && disabled && 'pointer-events-none cursor-not-allowed opacity-40',
+        mode === 'slot' && 'h-full',
       )}
       onClick={mode === 'browser' ? () => onToggle?.(tool.id) : undefined}
     >
       <Card
         className={cn(
           'relative bg-card/60 backdrop-blur-sm border-border/50',
-          mode === 'slot' && 'w-full shadow-[0_0_20px_hsl(var(--primary)/0.1)]',
+          mode === 'slot' && 'h-full w-full shadow-[0_0_20px_hsl(var(--primary)/0.1)]',
           (mode === 'slot' || selected) &&
             'ring-1 ring-primary/40 shadow-[0_0_20px_hsl(var(--primary)/0.15)]',
         )}

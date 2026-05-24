@@ -7,6 +7,7 @@ description: >
   support for 75+ LLM providers. Fully MIT-licensed with granular permission controls and no
   vendor lock-in.
 category: cli
+logo: https://img.logo.dev/opencode.ai?token=pk_&format=png&theme=dark&retina=true&fallback=404
 tags:
   - Coding Agent
   - Developer Tools

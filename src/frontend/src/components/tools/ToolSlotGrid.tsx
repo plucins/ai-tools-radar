@@ -20,7 +20,7 @@ interface EmptySlotProps {
 function EmptySlot({ slotNumber, onClick }: EmptySlotProps): React.ReactElement {
   return (
     <div
-      className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/25 bg-card/20 py-10 transition-colors hover:border-primary/50 hover:bg-card/40"
+      className="flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-primary/25 bg-card/20 py-10 transition-colors hover:border-primary/50 hover:bg-card/40"
       onClick={onClick}
       role="button"
       aria-label={`Add a tool to slot ${slotNumber} of 5`}
@@ -55,7 +55,7 @@ export function ToolSlotGrid({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.2 } }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
-            className="flex-1 min-w-[200px]"
+            className="flex flex-col flex-1 min-w-[200px]"
           >
             {tool !== null ? (
               <ToolCard tool={tool} mode="slot" onRemove={onRemove} />

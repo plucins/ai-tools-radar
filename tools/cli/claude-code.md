@@ -6,6 +6,7 @@ description: >
   Agentic coding assistant with full codebase understanding, autonomous multi-step execution,
   and deep tool integration — available in terminal, IDEs, desktop, and web.
 category: cli
+logo: https://img.logo.dev/anthropic.com?token=pk_&format=png&theme=dark&retina=true&fallback=404
 tags:
   - Coding Agent
   - Developer Tools

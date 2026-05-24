@@ -7,6 +7,7 @@ description: >
   commands, and interacts with GitHub.com on behalf of the user. Provides both interactive chat
   and programmatic single-prompt modes without requiring an IDE.
 category: cli
+logo: https://img.logo.dev/github.com?token=pk_&format=png&theme=dark&retina=true&fallback=404
 tags:
   - Coding Agent
   - Developer Tools
