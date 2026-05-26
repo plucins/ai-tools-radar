@@ -7,6 +7,7 @@ import { ToolsModule } from './tools/tools.module';
 import { ComparisonModule } from './comparison/comparison.module';
 import { LlmModule } from './llm/llm.module';
 import { ModelsModule } from './models/models.module';
+import { RadarModule } from './radar/radar.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ModelsModule } from './models/models.module';
     ComparisonModule,
     LlmModule,
     ModelsModule,
+    RadarModule,
   ],
 })
 export class AppModule {}
