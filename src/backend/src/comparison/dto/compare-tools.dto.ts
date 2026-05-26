@@ -1,4 +1,11 @@
-import { IsArray, IsString, ArrayMinSize, ArrayMaxSize } from 'class-validator';
+import {
+  IsArray,
+  IsString,
+  ArrayMinSize,
+  ArrayMaxSize,
+  IsOptional,
+  MinLength,
+} from 'class-validator';
 
 export class CompareToolsDto {
   @IsArray()
@@ -6,4 +13,9 @@ export class CompareToolsDto {
   @ArrayMinSize(2)
   @ArrayMaxSize(5)
   toolIds!: string[];
+
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  model?: string;
 }

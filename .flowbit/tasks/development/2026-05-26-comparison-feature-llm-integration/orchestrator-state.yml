@@ -1,0 +1,147 @@
+orchestrator:
+  started_phase: phase-1
+  completed_phases: []
+  failed_phases: []
+  auto_fix_attempts:
+    phase-1: 0
+    phase-2: 0
+    phase-5: 0
+    phase-6: 0
+    phase-7: 0
+    phase-8: 0
+    phase-10: 0
+    phase-11: 0
+  options:
+    spec_audit_enabled: true
+    skip_test_suite: true
+    e2e_enabled: true
+    user_docs_enabled: true
+    code_review_enabled: true
+    pragmatic_review_enabled: true
+    reality_check_enabled: true
+    production_check_enabled: true
+  created: "2026-05-26T22:03:00+02:00"
+  updated: "2026-05-26T22:03:00+02:00"
+  task_path: .flowbit/tasks/development/2026-05-26-comparison-feature-llm-integration
+
+task:
+  title: "Comparison Feature — Full E2E Implementation"
+  description: >
+    Implement the complete end-to-end comparison feature for AI Tools Radar.
+    Based on research of epics #5/#6/#7.
+    Covers: fix 2 critical DI bugs in comparison.module.ts; replace old score-based
+    data model with new ComparisonSection/FeatureRow/FeatureValue model across backend
+    and frontend; rewrite prompt.builder.ts system prompt for new schema; lift
+    selectedModel state to MainLayout and thread via React Router Outlet context;
+    rewrite ComparisonResult.tsx as tabbed feature-grid UI; update all tests.
+  status: in_progress
+  tags:
+    - comparison
+    - llm-integration
+    - litellm
+    - data-model
+    - frontend-backend
+  priority: high
+
+task_context:
+  risk_level: null
+  clarifications_resolved: null
+  scope_expanded: null
+  architecture_decision: null
+  task_characteristics:
+    has_reproducible_defect: true
+    modifies_existing_code: true
+    creates_new_entities: true
+    involves_data_operations: true
+    ui_heavy: true
+  research_reference:
+    path: .flowbit/tasks/research/2026-05-26-comparison-feature-llm-integration
+    research_question: >
+      What is the current implementation state of the comparison feature (Start Comparing),
+      what gaps remain to deliver a working end-to-end flow per epics #5/#6/#7,
+      and what is the correct data model and integration approach for LiteLLM proxy?
+    research_type: mixed
+    confidence_level: high
+  phase_summaries:
+    research:
+      summary: >
+        App is 60-70% done. Two critical DI wiring bugs in comparison.module.ts block
+        app startup. Backend and frontend both use old score-based ComparisonResult model
+        that has been rejected — must be replaced with ComparisonSection/FeatureRow/FeatureValue
+        (text-based, tab-rendered). selectedModel is trapped in Sidebar with no way to reach
+        ToolsPage. Issue #7 (LLM abstraction) is 100% complete — LiteLLM is drop-in via .env.
+        Frontend ComparisonResult.tsx renders only plain text; needs full tabbed rewrite.
+        5 backend tests broken; 21 new tests needed.
+      key_findings:
+        - "CRIT-1/2: comparison.module.ts missing LlmModule import and PromptBuilderService provider (2-line fix)"
+        - "HIGH-1 to 4: backend interfaces/parse/fallback/prompt all use old score model — complete rewrite"
+        - "HIGH-5/6: frontend types stub + ComparisonResult.tsx renders only summary text"
+        - "MED-1/2/3: selectedModel trapped in Sidebar — lift to MainLayout, outlet context to ToolsPage"
+        - "Issue #7 complete: LlmService already supports LiteLLM via OLLAMA_BASE_URL + Bearer auth"
+        - "ADR-001: boolean available+description (no scores); ADR-002: 4 static+dynamic sections; ADR-003: table+section summary; ADR-004: Outlet context for selectedModel"
+      recommended_approach: >
+        Group A (module wiring fix) → Group B (backend data model) → Group C (frontend types)
+        → Group D (selectedModel propagation, parallel with B/C) → Group E (ComparisonResult.tsx rewrite)
+        → Group F (tests, parallel with D/E after A+B)
+    codebase_analysis:
+      key_files:
+        - src/backend/src/comparison/comparison.module.ts
+        - src/backend/src/comparison/comparison.service.ts
+        - src/backend/src/comparison/prompt.builder.ts
+        - src/backend/src/comparison/comparison.controller.ts
+        - src/frontend/src/types/comparison.ts
+        - src/frontend/src/components/comparison/ComparisonResult.tsx
+        - src/frontend/src/components/layout/MainLayout.tsx
+        - src/frontend/src/components/layout/Sidebar.tsx
+        - src/frontend/src/routes/ToolsPage.tsx
+        - src/backend/src/comparison/comparison.service.spec.ts
+        - src/backend/src/llm/llm.service.ts
+      primary_language: TypeScript
+      summary: >
+        Comparison feature pipeline exists end-to-end but broken at runtime due to 2 DI bugs
+        in comparison.module.ts. Backend uses old score-based model (comparedTools/criteria/score)
+        that must be fully replaced. Frontend types stub + ComparisonResult.tsx renders only
+        summary text. selectedModel trapped in Sidebar. 5 tests failing; 2 test files missing.
+        LlmService mockComplete() heuristic ("comparedTools" check) will need updating.
+        20 files identified; 9 require direct changes.
+    clarifications:
+      - "mockComplete() heuristic uses 'comparedTools' string detection — must update for new model"
+      - "ComparisonSection.summary?: string confirmed included (per ADR-003/HLD)"
+      - "ArrayMaxSize(5) in DTO kept as-is (research said 4, code has 5)"
+      - "FeatureTable.tsx and ToolSummaryCard.tsx created as separate component files"
+    gap_analysis:
+      integration_points:
+        - comparison.module.ts (DI wiring — LlmModule + PromptBuilderService)
+        - comparison.service.ts (data model + parse/fallback/mock)
+        - prompt.builder.ts (system prompt JSON schema)
+        - types/comparison.ts (6-interface replacement)
+        - ComparisonResult.tsx (tabbed UI rewrite)
+        - MainLayout.tsx/Sidebar.tsx/ToolsPage.tsx (selectedModel Outlet context)
+      summary: >
+        Feature 35% complete. 2 DI bugs crash app. Backend/frontend both use rejected
+        score-based model. selectedModel never reaches API. UI renders summary text only.
+        5 tests failing; 2 test files missing. Tabs shadcn component not installed.
+    scope_clarifications:
+      scope_expanded: false
+      summary: >
+        3 decisions resolved: ComparisonSection.summary? included (ADR-003); mockComplete()
+        returns hardcoded new-model stub unconditionally; AppOutletContext in dedicated
+        OutletContext.ts file.
+
+  project_context:
+    project_doc_paths:
+      - .flowbit/docs/standards/global/coding-standards.md
+      - .flowbit/docs/standards/frontend/frontend-standards.md
+      - .flowbit/docs/standards/backend/backend-standards.md
+      - .flowbit/docs/standards/testing/testing-standards.md
+      - .flowbit/docs/standards/tools/tool-profile-standards.md
+      - .flowbit/docs/project/vision.md
+      - .flowbit/docs/project/tech-stack.md
+      - .flowbit/docs/project/architecture.md
+
+verification_context:
+  last_status: null
+  issues_found: []
+  fixes_applied: []
+  decisions_made: []
+  reverify_count: 0

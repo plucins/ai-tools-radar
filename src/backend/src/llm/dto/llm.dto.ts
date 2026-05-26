@@ -1,5 +1,10 @@
+export interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
 export interface LlmCompletionRequest {
-  prompt: string;
+  messages: ChatMessage[];
   model?: string;
 }
 

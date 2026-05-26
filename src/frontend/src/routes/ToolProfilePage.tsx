@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Copy, Check } from 'lucide-react'
+import { ArrowLeft, Copy, Check, X } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Button } from '@/components/ui/button'
@@ -79,7 +79,14 @@ export function ToolProfilePage() {
       )}
 
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="relative">
+          <button
+            onClick={() => setError(null)}
+            className="absolute right-3 top-3 rounded-sm opacity-70 hover:opacity-100 focus:outline-none"
+            aria-label="Dismiss error"
+          >
+            <X className="h-4 w-4" />
+          </button>
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>

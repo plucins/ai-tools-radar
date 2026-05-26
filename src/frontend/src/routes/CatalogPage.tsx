@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -59,7 +59,14 @@ export function CatalogPage() {
       </div>
 
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="relative">
+          <button
+            onClick={() => setError(null)}
+            className="absolute right-3 top-3 rounded-sm opacity-70 hover:opacity-100 focus:outline-none"
+            aria-label="Dismiss error"
+          >
+            <X className="h-4 w-4" />
+          </button>
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>

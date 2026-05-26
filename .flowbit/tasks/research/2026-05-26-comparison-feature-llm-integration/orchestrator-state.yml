@@ -1,0 +1,99 @@
+orchestrator:
+  started_phase: phase-1
+  completed_phases: []
+  failed_phases: []
+  auto_fix_attempts:
+    phase-1: 0
+    phase-2: 0
+    phase-3: 0
+    phase-4: 0
+    phase-5: 0
+    phase-6: 0
+  options:
+    brainstorming_enabled: null
+    design_enabled: null
+  created: "2026-05-26T21:32:00+02:00"
+  updated: "2026-05-26T21:32:00+02:00"
+  task_path: .flowbit/tasks/research/2026-05-26-comparison-feature-llm-integration
+  task_ids:
+    phase-1: null
+    phase-2: null
+    phase-3: null
+    phase-4: null
+    phase-5: null
+    phase-6: null
+
+task:
+  title: "Comparison Feature & LiteLLM Integration Research"
+  description: >
+    Investigate the current thread regarding issues #5, #6, #7 — full implementation of the
+    AI tool comparison feature. Covers: LiteLLM proxy integration, ComparisonResult data model,
+    frontend-backend flow, state propagation (selectedModel), and identification of remaining
+    implementation gaps in the comparison pipeline.
+  status: in_progress
+  tags:
+    - comparison
+    - llm-integration
+    - litellm
+    - data-model
+    - frontend-backend
+  priority: high
+
+research_context:
+  research_type: mixed
+  research_question: >
+    What is the current implementation state of the comparison feature (Start Comparing),
+    what gaps remain to deliver a working end-to-end flow per epics #5/#6/#7,
+    and what is the correct data model and integration approach for LiteLLM proxy?
+  scope:
+    included:
+      - Backend comparison pipeline (ComparisonService, LlmService, PromptBuilderService)
+      - Frontend comparison flow (ToolsPage, ComparisonResultPage, ComparisonResult component)
+      - LiteLLM proxy API contract and available endpoints
+      - Data model for ComparisonResult (frontend/backend contract)
+      - selectedModel state propagation from Sidebar to ToolsPage
+      - Issues #5, #6, #7 acceptance criteria
+    excluded:
+      - Radar chart feature
+      - Tool profile authoring workflow
+      - Authentication/auth concerns
+    constraints:
+      - NestJS backend, React+Vite frontend (TypeScript strict)
+      - LiteLLM proxy at https://litellm.proxy.innovatingtogether.online
+      - OpenAI-compatible API format (/v1/chat/completions)
+      - class-validator for DTOs (no zod)
+  methodology:
+    - mixed-research
+    - codebase-analysis
+    - requirements-synthesis
+    - api-contract-review
+  sources: []
+  confidence_level: null
+  gathering_strategy:
+    categories: []
+    count: 0
+    source: null
+  phase_summaries:
+    phase-1:
+      summary: null
+      steps_completed: []
+    phase-3:
+      summary: null
+    phase-4:
+      summary: null
+      decision_areas: []
+      deferred_ideas: []
+    phase-5:
+      summary: null
+      architecture_style: null
+      decisions_count: 0
+
+  project_doc_paths:
+    - .flowbit/docs/standards/global/coding-standards.md
+    - .flowbit/docs/standards/frontend/frontend-standards.md
+    - .flowbit/docs/standards/backend/backend-standards.md
+    - .flowbit/docs/standards/testing/testing-standards.md
+    - .flowbit/docs/standards/tools/tool-profile-standards.md
+    - .flowbit/docs/project/vision.md
+    - .flowbit/docs/project/tech-stack.md
+    - .flowbit/docs/project/architecture.md

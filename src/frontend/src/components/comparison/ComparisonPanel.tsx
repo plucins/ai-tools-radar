@@ -8,6 +8,7 @@ interface ComparisonPanelProps {
   selectedCount: number
   loading: boolean
   stage: ComparisonStage
+  selectedModel: string
   onCompare: () => void
 }
 
@@ -30,7 +31,7 @@ function getProgressWidth(stage: ComparisonStage): string {
   return 'w-0'
 }
 
-export function ComparisonPanel({ selectedCount, loading, stage, onCompare }: ComparisonPanelProps) {
+export function ComparisonPanel({ selectedCount, loading, stage, selectedModel, onCompare }: ComparisonPanelProps) {
   // State C: loading / in-progress
   if (loading) {
     const currentStageIndex = stage !== null ? STAGE_ORDER[stage] : -1
@@ -117,7 +118,8 @@ export function ComparisonPanel({ selectedCount, loading, stage, onCompare }: Co
     )
   }
 
-  // State B: ready to compare
+  // State B: ready to compare (or needs a model)
+  const canCompare = !!selectedModel
   return (
     <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-card/40 p-10 backdrop-blur-sm shadow-[0_0_80px_hsl(var(--primary)/0.2)]">
       <div
@@ -142,10 +144,23 @@ export function ComparisonPanel({ selectedCount, loading, stage, onCompare }: Co
             </p>
           )}
         </div>
+        {!canCompare && (
+          <p className="flex items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm text-amber-400">
+            <Lock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            Select a model in the sidebar to start comparing
+          </p>
+        )}
         <button
-          onClick={onCompare}
-          className="flex h-14 w-full max-w-xs items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-blue-600 px-8 font-semibold text-white shadow-[0_0_40px_hsl(var(--primary)/0.45)] transition-all hover:shadow-[0_0_60px_hsl(var(--primary)/0.6)] hover:scale-105 active:scale-100"
+          onClick={canCompare ? onCompare : undefined}
+          disabled={!canCompare}
+          className={cn(
+            'flex h-14 w-full max-w-xs items-center justify-center gap-2 rounded-full px-8 font-semibold text-white transition-all',
+            canCompare
+              ? 'bg-gradient-to-r from-primary to-blue-600 shadow-[0_0_40px_hsl(var(--primary)/0.45)] hover:shadow-[0_0_60px_hsl(var(--primary)/0.6)] hover:scale-105 active:scale-100'
+              : 'cursor-not-allowed bg-primary/30 opacity-50',
+          )}
           aria-label="Start AI comparison"
+          aria-disabled={!canCompare}
         >
           <Sparkles className="h-4 w-4" aria-hidden="true" />
           Start Comparing

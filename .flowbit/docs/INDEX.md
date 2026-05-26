@@ -26,7 +26,7 @@ React + Vite + Tailwind CSS standards.
 
 | File | Description |
 |---|---|
-| [`standards/frontend/frontend-standards.md`](standards/frontend/frontend-standards.md) | Component structure (shadcn/ui-first rule), Tailwind CSS variable token system, glassmorphic dark UI aesthetic (color palette, corner radius, backgrounds, glow/shadow patterns, border conventions, CTA button pattern, nav item pattern, badge/status patterns), Framer Motion animation conventions, async state, type safety, accessibility, performance |
+| [`standards/frontend/frontend-standards.md`](standards/frontend/frontend-standards.md) | Component structure (shadcn/ui-first rule), Tailwind CSS variable token system, glassmorphic dark UI aesthetic (color palette, corner radius, backgrounds, glow/shadow patterns, border conventions, CTA button pattern, nav item pattern, badge/status patterns), Framer Motion animation conventions, async state (normalize errors with instanceof check, dismissible Alert messages — always include an X close button), type safety, accessibility, performance |
 
 ---
 
