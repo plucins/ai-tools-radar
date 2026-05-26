@@ -1,4 +1,4 @@
-import type { ComparisonRequest, ComparisonResult } from '@/types/comparison'
+import type { ComparisonRequest, ComparisonResult, ComparisonStreamEvent } from '@/types/comparison'
 import type { Tool } from '@/types/tool'
 import type { ModelListResponse } from '@/types/model'
 import type { RadarData } from '@/types/radar'
@@ -36,6 +36,47 @@ export const api = {
         method: 'POST',
         body: JSON.stringify(body),
       }),
+    stream: (body: ComparisonRequest): ReadableStream<ComparisonStreamEvent> => {
+      let ctrl: ReadableStreamDefaultController<ComparisonStreamEvent>
+      const readable = new ReadableStream<ComparisonStreamEvent>({
+        start(c) { ctrl = c },
+      })
+
+      void fetch(`${API_BASE_URL}/comparison/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }).then(async (res) => {
+        if (!res.ok || !res.body) {
+          ctrl.error(new Error(`HTTP ${res.status}`))
+          return
+        }
+        const reader = res.body.getReader()
+        const decoder = new TextDecoder()
+        let buffer = ''
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          buffer += decoder.decode(value, { stream: true })
+          const lines = buffer.split('\n')
+          buffer = lines.pop() ?? ''
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue
+            try {
+              const event = JSON.parse(line.slice(6)) as ComparisonStreamEvent
+              ctrl.enqueue(event)
+              if (event.type === 'done' || event.type === 'error') {
+                ctrl.close()
+                return
+              }
+            } catch { /* skip malformed lines */ }
+          }
+        }
+        ctrl.close()
+      }).catch((err: unknown) => ctrl.error(err))
+
+      return readable
+    },
   },
   models: {
     list: () => request<ModelListResponse>('/models'),

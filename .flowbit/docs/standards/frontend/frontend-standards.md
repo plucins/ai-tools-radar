@@ -318,6 +318,58 @@ setError(err.message)
 - **Evidence**: 2/2 sampled frontend error-handling files follow this pattern
 - **Confidence**: 68 (code-patterns)
 
+### Dismissible Alert Messages — Always Include an X Close Button
+
+Every `Alert` component used to display an error, warning, or informational message to the user **must** include an X button in the top-right corner that dismisses the message. This applies to all variants (`destructive`, default, and any future variants).
+
+**Rules:**
+- Add `className="relative"` to the `<Alert>` wrapper.
+- Place a `<button>` with `className="absolute right-3 top-3 rounded-sm opacity-70 hover:opacity-100 focus:outline-none"` and `aria-label="Dismiss [type]"` inside the alert.
+- Use the `X` icon from `lucide-react` (`h-4 w-4`) as the button's child.
+- For page-level state (`useState<string | null>` error), call `setError(null)` on click.
+- For component-level alerts (no external state owner), add local `useState<boolean>` (default `true`) and set it to `false` on click.
+- Import `X` from `lucide-react` alongside other icon imports.
+
+```tsx
+// ✅ Correct — page-level error with dismiss
+import { X } from 'lucide-react'
+
+{error && (
+  <Alert variant="destructive" className="relative">
+    <button
+      onClick={() => setError(null)}
+      className="absolute right-3 top-3 rounded-sm opacity-70 hover:opacity-100 focus:outline-none"
+      aria-label="Dismiss error"
+    >
+      <X className="h-4 w-4" />
+    </button>
+    <AlertTitle>Error</AlertTitle>
+    <AlertDescription>{error}</AlertDescription>
+  </Alert>
+)}
+
+// ✅ Correct — component-level info alert with local dismiss state
+const [showBanner, setShowBanner] = useState(true)
+
+{showBanner && (
+  <Alert className="relative">
+    <button
+      onClick={() => setShowBanner(false)}
+      className="absolute right-3 top-3 rounded-sm opacity-70 hover:opacity-100 focus:outline-none"
+      aria-label="Dismiss recommendation"
+    >
+      <X className="h-4 w-4" />
+    </button>
+    <AlertDescription>{message}</AlertDescription>
+  </Alert>
+)}
+
+// ❌ Wrong — Alert with no way to dismiss
+<Alert variant="destructive">
+  <AlertDescription>{error}</AlertDescription>
+</Alert>
+```
+
 ## Type Safety
 
 - API response shapes must be defined as TypeScript interfaces or `zod` schemas shared with or mirrored from the backend contract.

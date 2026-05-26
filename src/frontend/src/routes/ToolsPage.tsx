@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Plus, Sparkles } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import { Plus, Sparkles, X } from 'lucide-react'
 import { ComparisonPanel } from '@/components/comparison/ComparisonPanel'
 import type { ComparisonStage } from '@/components/comparison/ComparisonPanel'
 import { AddToolModal } from '@/components/tools/AddToolModal'
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { api } from '@/lib/api'
 import type { Tool } from '@/types/tool'
+import type { AppOutletContext } from '@/components/layout/OutletContext'
 
 export function ToolsPage() {
   const [tools, setTools] = useState<Tool[]>([])
@@ -19,7 +20,9 @@ export function ToolsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [comparing, setComparing] = useState(false)
   const [stage, setStage] = useState<ComparisonStage>(null)
+  const stageTimers = useRef<ReturnType<typeof setTimeout>[]>([])
   const navigate = useNavigate()
+  const { selectedModel } = useOutletContext<AppOutletContext>()
 
   const selectedTools: Tool[] = [...selectedIds]
     .map((id) => tools.find((t) => t.id === id))
@@ -58,23 +61,37 @@ export function ToolsPage() {
     })
   }
 
-  async function handleCompare() {
-    if (selectedIds.size < 2 || comparing) return
-    setComparing(true)
-    setStage('gathering')
+  const streamingEnabled = import.meta.env.VITE_COMPARISON_STREAMING !== 'false'
 
-    const t1 = setTimeout(() => setStage('comparing'), 400)
-    const t2 = setTimeout(() => setStage('generating'), 1200)
+  async function handleCompare() {
+    if (selectedIds.size < 2 || comparing || !selectedModel) return
+    setComparing(true)
+
+    if (streamingEnabled) {
+      navigate('/compare', {
+        state: { streaming: true, toolIds: [...selectedIds], model: selectedModel || undefined },
+      })
+      return
+    }
+
+    // Classic mode: animate stages while the API call runs
+    setStage('gathering')
+    stageTimers.current.push(setTimeout(() => setStage('comparing'), 600))
+    stageTimers.current.push(setTimeout(() => setStage('generating'), 1400))
 
     try {
-      const result = await api.comparison.compare({ toolIds: [...selectedIds] })
-      clearTimeout(t1)
-      clearTimeout(t2)
+      const result = await api.comparison.compare({
+        toolIds: [...selectedIds],
+        model: selectedModel,
+      })
+      stageTimers.current.forEach(clearTimeout)
+      stageTimers.current = []
       navigate('/compare', { state: { result } })
     } catch (err) {
-      clearTimeout(t1)
-      clearTimeout(t2)
+      stageTimers.current.forEach(clearTimeout)
+      stageTimers.current = []
       setError(err instanceof Error ? err.message : 'Comparison failed')
+    } finally {
       setComparing(false)
       setStage(null)
     }
@@ -96,7 +113,14 @@ export function ToolsPage() {
 
       {/* Error alert */}
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="relative">
+          <button
+            onClick={() => setError(null)}
+            className="absolute right-3 top-3 rounded-sm opacity-70 hover:opacity-100 focus:outline-none"
+            aria-label="Dismiss error"
+          >
+            <X className="h-4 w-4" />
+          </button>
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
@@ -144,6 +168,7 @@ export function ToolsPage() {
           selectedCount={selectedIds.size}
           loading={comparing}
           stage={stage}
+          selectedModel={selectedModel}
           onCompare={handleCompare}
         />
       )}
