@@ -186,7 +186,10 @@ describe('ToolsService', () => {
     it('skips subdir entry gracefully when statSync throws (line 59)', () => {
       // Arrange — broken symlink: readdirSync returns its name but statSync throws ENOENT
       const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tools-test-'));
-      fs.symlinkSync('/nonexistent/target/that/does/not/exist', path.join(tmpDir, 'broken-link'));
+      fs.symlinkSync(
+        '/nonexistent/target/that/does/not/exist',
+        path.join(tmpDir, 'broken-link'),
+      );
       const service = new ToolsService(tmpDir);
 
       // Act & Assert — broken symlink is skipped, no crash

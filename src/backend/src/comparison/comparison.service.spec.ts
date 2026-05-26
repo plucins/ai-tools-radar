@@ -37,13 +37,15 @@ describe('ComparisonService', () => {
 
   it('compare() returns result with tools matching input toolIds', () => {
     // Arrange
-    (toolsService.findOne as jest.Mock).mockImplementation((id: string): Tool => ({
-      id,
-      name: id === 'claude-code' ? 'Claude Code' : 'GitHub Copilot CLI',
-      description: 'A description',
-      category: 'cli',
-      tags: [],
-    }));
+    (toolsService.findOne as jest.Mock).mockImplementation(
+      (id: string): Tool => ({
+        id,
+        name: id === 'claude-code' ? 'Claude Code' : 'GitHub Copilot CLI',
+        description: 'A description',
+        category: 'cli',
+        tags: [],
+      }),
+    );
     const dto = { toolIds: ['claude-code', 'github-copilot-cli'] };
 
     // Act
@@ -55,16 +57,20 @@ describe('ComparisonService', () => {
 
   it('compare() returns generatedAt as valid ISO 8601 string', () => {
     // Arrange
-    (toolsService.findOne as jest.Mock).mockImplementation((id: string): Tool => ({
-      id,
-      name: 'Tool',
-      description: 'A description',
-      category: 'cli',
-      tags: [],
-    }));
+    (toolsService.findOne as jest.Mock).mockImplementation(
+      (id: string): Tool => ({
+        id,
+        name: 'Tool',
+        description: 'A description',
+        category: 'cli',
+        tags: [],
+      }),
+    );
 
     // Act
-    const result = service.compare({ toolIds: ['claude-code', 'github-copilot-cli'] });
+    const result = service.compare({
+      toolIds: ['claude-code', 'github-copilot-cli'],
+    });
 
     // Assert
     expect(typeof result.generatedAt).toBe('string');
@@ -73,16 +79,20 @@ describe('ComparisonService', () => {
 
   it('compare() mock summary contains tool names', () => {
     // Arrange
-    (toolsService.findOne as jest.Mock).mockImplementation((id: string): Tool => ({
-      id,
-      name: id === 'claude-code' ? 'Claude Code' : 'GitHub Copilot CLI',
-      description: 'A description',
-      category: 'cli',
-      tags: [],
-    }));
+    (toolsService.findOne as jest.Mock).mockImplementation(
+      (id: string): Tool => ({
+        id,
+        name: id === 'claude-code' ? 'Claude Code' : 'GitHub Copilot CLI',
+        description: 'A description',
+        category: 'cli',
+        tags: [],
+      }),
+    );
 
     // Act
-    const result = service.compare({ toolIds: ['claude-code', 'github-copilot-cli'] });
+    const result = service.compare({
+      toolIds: ['claude-code', 'github-copilot-cli'],
+    });
 
     // Assert
     expect(result.summary).toContain('Claude Code');
@@ -107,13 +117,15 @@ describe('ComparisonService', () => {
 
   it('compare() summary uses "and N more" format for more than 2 tools (lines 48-49)', () => {
     // Arrange
-    (toolsService.findOne as jest.Mock).mockImplementation((id: string): Tool => ({
-      id,
-      name: `Tool ${id}`,
-      description: 'A description',
-      category: 'cli',
-      tags: [],
-    }));
+    (toolsService.findOne as jest.Mock).mockImplementation(
+      (id: string): Tool => ({
+        id,
+        name: `Tool ${id}`,
+        description: 'A description',
+        category: 'cli',
+        tags: [],
+      }),
+    );
     const dto = { toolIds: ['a', 'b', 'c'] };
 
     // Act

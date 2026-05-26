@@ -1,7 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
-import { Injectable, Logger, NotFoundException, Optional, Inject } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  Optional,
+  Inject,
+} from '@nestjs/common';
 
 export interface Tool {
   id: string;
@@ -23,7 +29,7 @@ export class ToolsService {
 
   constructor(@Optional() @Inject(TOOLS_ROOT) toolsRoot?: string) {
     const root =
-      toolsRoot ?? path.join(__dirname, '..', '..', '..', '..', 'tools');
+      toolsRoot ?? path.join(__dirname, '..', '..', '..', '..', 'data', 'tools');
     this.tools = this.loadTools(root);
   }
 
@@ -98,13 +104,14 @@ export class ToolsService {
 
           tools.push({
             id,
-            name: parsed['name'] as string,
-            description: parsed['description'] as string,
-            category: parsed['category'] as string,
+            name: parsed['name'],
+            description: parsed['description'],
+            category: parsed['category'],
             tags: Array.isArray(parsed['tags'])
               ? (parsed['tags'] as string[])
               : [],
-            logo: typeof parsed['logo'] === 'string' ? parsed['logo'] : undefined,
+            logo:
+              typeof parsed['logo'] === 'string' ? parsed['logo'] : undefined,
             profilePath,
             content,
           });

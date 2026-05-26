@@ -1,10 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import {
-  LlmCompletionRequest,
-  LlmCompletionResponse,
-} from './dto/llm.dto';
+import { LlmCompletionRequest, LlmCompletionResponse } from './dto/llm.dto';
 
 @Injectable()
 export class LlmService {
@@ -19,8 +16,7 @@ export class LlmService {
     this.baseUrl =
       this.configService.get<string>('ollama.baseUrl') ??
       'http://localhost:11434';
-    this.model =
-      this.configService.get<string>('ollama.model') ?? 'llama3';
+    this.model = this.configService.get<string>('ollama.model') ?? 'llama3';
     this.timeoutMs =
       this.configService.get<number>('ollama.timeoutMs') ?? 120000;
   }
@@ -34,9 +30,7 @@ export class LlmService {
     return this.ollamaComplete(request);
   }
 
-  private mockComplete(
-    request: LlmCompletionRequest,
-  ): LlmCompletionResponse {
+  private mockComplete(request: LlmCompletionRequest): LlmCompletionResponse {
     this.logger.log('LLM mock mode: returning placeholder response');
     return {
       text: `[MOCK] Response to: ${request.prompt.slice(0, 60)}...`,

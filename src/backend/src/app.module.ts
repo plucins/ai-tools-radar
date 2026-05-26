@@ -6,6 +6,7 @@ import { HealthModule } from './health/health.module';
 import { ToolsModule } from './tools/tools.module';
 import { ComparisonModule } from './comparison/comparison.module';
 import { LlmModule } from './llm/llm.module';
+import { ModelsModule } from './models/models.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { LlmModule } from './llm/llm.module';
     ToolsModule,
     ComparisonModule,
     LlmModule,
+    ModelsModule,
   ],
 })
 export class AppModule {}

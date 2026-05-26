@@ -7,8 +7,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const frontendOrigin =
-    process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
+  const frontendOrigin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
 
   app.enableCors({
     origin: frontendOrigin,

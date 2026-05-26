@@ -1,5 +1,6 @@
 import type { ComparisonRequest, ComparisonResult } from '@/types/comparison'
 import type { Tool } from '@/types/tool'
+import type { ModelListResponse } from '@/types/model'
 import { API_BASE_URL } from './config'
 
 interface ApiEnvelope<T> {
@@ -34,5 +35,8 @@ export const api = {
         method: 'POST',
         body: JSON.stringify(body),
       }),
+  },
+  models: {
+    list: () => request<ModelListResponse>('/models'),
   },
 }
