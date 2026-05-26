@@ -1,6 +1,7 @@
 import type { ComparisonRequest, ComparisonResult } from '@/types/comparison'
 import type { Tool } from '@/types/tool'
 import type { ModelListResponse } from '@/types/model'
+import type { RadarData } from '@/types/radar'
 import { API_BASE_URL } from './config'
 
 interface ApiEnvelope<T> {
@@ -38,5 +39,8 @@ export const api = {
   },
   models: {
     list: () => request<ModelListResponse>('/models'),
+  },
+  radar: {
+    get: (options?: RequestInit) => request<RadarData>('/radar', options),
   },
 }

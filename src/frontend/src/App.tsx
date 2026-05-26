@@ -4,6 +4,7 @@ import { ComparisonResultPage } from './routes/ComparisonResultPage'
 import { ToolsPage } from './routes/ToolsPage'
 import { CatalogPage } from './routes/CatalogPage'
 import { ToolProfilePage } from './routes/ToolProfilePage'
+import { RadarPage } from './routes/RadarPage'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="compare" element={<ComparisonResultPage />} />
           <Route path="catalog" element={<CatalogPage />} />
           <Route path="catalog/:id" element={<ToolProfilePage />} />
+          <Route path="radar" element={<RadarPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

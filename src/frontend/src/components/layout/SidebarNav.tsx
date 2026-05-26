@@ -1,4 +1,4 @@
-import { Scale, LayoutGrid } from 'lucide-react'
+import { Scale, LayoutGrid, Activity } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { SidebarNavItem } from '@/components/layout/SidebarNavItem'
 
@@ -13,6 +13,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { id: 'compare', label: 'Compare', icon: Scale, to: '/' },
   { id: 'catalog', label: 'Catalog', icon: LayoutGrid, to: '/catalog', end: false },
+  { id: 'radar', label: 'Radar', icon: Activity, to: '/radar', end: false },
 ]
 
 export function SidebarNav() {
