@@ -38,7 +38,7 @@ tags:
 ## Classification
 
 - **Primary category:** Coding Agent / CLI-based agent development tool
-- **Secondary categories:** Part of the Google Antigravity platform (see also: Antigravity 2.0 desktop app at `tools/ide/google-antigravity.md`)
+- **Secondary categories:** Part of the Google Antigravity platform (see also: Antigravity 2.0 desktop app at `data/tools/ide/google-antigravity.md`)
 - **Tool type:** SaaS (subscription-based; cloud-processed agent harness)
 - **Problem domain:** Software development, AI-assisted coding, multi-agent terminal workflows
 - **User interaction type:** CLI (terminal)
@@ -128,7 +128,7 @@ tags:
 - **Download:** https://antigravity.google/download
 - **Repository:** https://github.com/google-antigravity/antigravity-cli
 - **Related surfaces (same platform):**
-  - Antigravity 2.0 desktop application — `tools/ide/google-antigravity.md`
+  - Antigravity 2.0 desktop application — `data/tools/ide/google-antigravity.md`
   - Antigravity SDK — programmatic agent authoring
   - Managed Agents API — server-side agents via Gemini API
   - Gemini Enterprise Agent Platform — enterprise Google Cloud deployment
@@ -246,8 +246,8 @@ tags:
 ### [2026-05-24] Profile split and CLI-specific update
 - Original profile covered entire Antigravity platform (desktop + CLI + SDK)
 - Profile split into two separate files:
-  - `tools/cli/google-antigravity.md` (this file) — Antigravity CLI only
-  - `tools/ide/google-antigravity.md` — Antigravity 2.0 desktop application
+  - `data/tools/cli/google-antigravity.md` (this file) — Antigravity CLI only
+  - `data/tools/ide/google-antigravity.md` — Antigravity 2.0 desktop application
 - Added CLI-specific facts from official sources: Go implementation, asynchronous workflows, features retained from Gemini CLI (Skills, Hooks, Subagents, plugins), GitHub repo URL, Gemini CLI sunset date (June 18 2026), enterprise exceptions, download URL
 - Sources: Google I/O 2026 Developer Highlights blog post; Gemini CLI → Antigravity CLI migration notice (developers.googleblog.com)
 

@@ -52,7 +52,7 @@ task:
       4. View comparison result
 
     Technical scope:
-    - Backend: GET /tools endpoint, tool data from tools/ Markdown files, shared Tool type
+    - Backend: GET /tools endpoint, tool data from data/tools/ Markdown files, shared Tool type
     - Frontend: Tool Selection Workspace (hero block, selected tools header, tool slots grid, add tool modal,
       comparison CTA block), ToolCard component, fuzzy search+filter modal, Framer Motion animations,
       all UI states (loading, error, empty, max reached, min not met)
@@ -89,7 +89,7 @@ task_context:
     clarifications: []
     gap_analysis:
       integration_points:
-        - "tools/*.md → ToolsService (fs Markdown parsing)"
+        - "data/tools/*.md → ToolsService (fs Markdown parsing)"
         - "api.ts envelope unwrap bug"
         - "Tool type alignment (frontend complete, backend missing fields)"
         - "ComparisonResult type fix (backend → frontend)"

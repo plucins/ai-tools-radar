@@ -13,7 +13,7 @@ description: Generate factual, evidence-based descriptions of AI tools using onl
 - Follow the section structure from the tool profile template (`references/profile-template-sections.md`)
 - Omit entire sections when official sources do not provide information
 - Mark uncertain information with `[UNVERIFIED]`, `[NEEDS UPDATE]`, or `[ESTIMATED]`
-- Classify the tool's primary category first (see Workflow Step 1) and determine the correct `tools/<category>/` subfolder before creating or locating any file
+- Classify the tool's primary category first (see Workflow Step 1) and determine the correct `data/tools/<category>/` subfolder before creating or locating any file
 - Check if a file for the tool already exists at the target path before creating a new one
 - Append new information to existing files — never silently overwrite previous assessments
 - Use dated changelog entries when updating existing profiles
@@ -54,9 +54,9 @@ Before creating or locating any file, determine the tool's primary category base
 
 **Multi-category tools:** If a tool has both a CLI and an IDE integration (e.g., it ships a VS Code extension *and* a terminal agent), classify by **which mode its documentation and marketing primarily target**. Record secondary categories in the profile's Classification section.
 
-**New category:** If the tool does not fit any existing folder, create a new subfolder under `tools/` with a lowercase hyphenated name (e.g., `tools/api-gateway/`, `tools/automation-platform/`). Only create a new category if none of the existing ones is a reasonable primary fit.
+**New category:** If the tool does not fit any existing folder, create a new subfolder under `data/tools/` with a lowercase hyphenated name (e.g., `data/tools/api-gateway/`, `data/tools/automation-platform/`). Only create a new category if none of the existing ones is a reasonable primary fit.
 
-**Determine the target path:** `tools/<category>/<tool-name-slug>.md`
+**Determine the target path:** `data/tools/<category>/<tool-name-slug>.md`
 
 ---
 
@@ -64,7 +64,7 @@ Before creating or locating any file, determine the tool's primary category base
 
 Before starting analysis, check if a dedicated file for the tool already exists at the target path determined in Step 1.
 
-- If the file **does not exist**: create a new file at `tools/<category>/<tool-name-slug>.md`
+- If the file **does not exist**: create a new file at `data/tools/<category>/<tool-name-slug>.md`
 - If the file **already exists**: update it with newly discovered information, updated specifications, and changes from changelogs or documentation. Use dated sections for changes.
 
 ### Research from official sources

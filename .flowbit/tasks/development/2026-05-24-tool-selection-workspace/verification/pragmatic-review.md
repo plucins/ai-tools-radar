@@ -210,9 +210,9 @@ The second option is simpler since `onAddTools` currently also calls `setIsModal
 
 **File**: `src/backend/src/tools/tools.service.ts`, line 24
 
-**Problem**: The default `tools/` root is resolved via:
+**Problem**: The default `data/tools/` root is resolved via:
 ```ts
-path.join(__dirname, '..', '..', '..', '..', 'tools')
+path.join(__dirname, '..', '..', '..', '..', 'data', 'tools')
 ```
 This relies on the compiled output directory being exactly 4 levels below the repo root (`dist/tools/tools/tools.service.js`). If the NestJS `outDir` ever changes, or if the service is tested in a different working directory, this path silently resolves to the wrong location.
 
@@ -222,12 +222,12 @@ The `@Optional() @Inject(TOOLS_ROOT)` DI injection for tests is a good pattern t
 
 ```ts
 // More robust — cwd-relative
-const root = toolsRoot ?? path.join(process.cwd(), 'tools');
+const root = toolsRoot ?? path.join(process.cwd(), 'data', 'tools');
 ```
 
 Or wire it through `ConfigService` with a default:
 ```ts
-const root = toolsRoot ?? this.configService.get<string>('tools.root', path.join(process.cwd(), 'tools'));
+const root = toolsRoot ?? this.configService.get<string>('tools.root', path.join(process.cwd(), 'data', 'tools'));
 ```
 
 **Impact**: Low risk to change, but avoids a silent breakage if the project structure evolves.

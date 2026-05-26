@@ -52,7 +52,7 @@ All 10 acceptance criteria pass. The Tool Selection Workspace is fully functiona
       "description": "Agentic coding assistant...",
       "category": "cli",
       "tags": ["Coding Agent", "Developer Tools"],
-      "profilePath": "tools/cli/claude-code.md"
+      "profilePath": "data/tools/cli/claude-code.md"
     },
     {
       "id": "github-copilot-cli",

@@ -430,18 +430,18 @@ export interface Tool {
   description: string; // from YAML: description (block scalar resolved by js-yaml)
   category: string;    // from YAML: category
   tags: string[];      // from YAML: tags (list)
-  profilePath?: string; // relative path: 'tools/cli/claude-code.md'
+  profilePath?: string; // relative path: 'data/tools/cli/claude-code.md'
 }
 ```
 
 ### File Discovery
 
-- Root: `path.join(__dirname, '..', '..', '..', '..', 'tools')` — `__dirname` is the compiled file location (`dist/src/tools/`); climbing 4 levels reaches the repository root. Do **NOT** use `process.cwd()` — it resolves to `src/backend/` (not the repo root) and will produce an empty catalog with no startup error.
-- Walk subdirectories one level deep: `tools/<category>/<tool-name>.md`
+- Root: `path.join(__dirname, '..', '..', '..', '..', 'data', 'tools')` — `__dirname` is the compiled file location (`dist/src/tools/`); climbing 4 levels reaches the repository root. Do **NOT** use `process.cwd()` — it resolves to `src/backend/` (not the repo root) and will produce an empty catalog with no startup error.
+- Walk subdirectories one level deep: `data/tools/<category>/<tool-name>.md`
 - Filter: only `.md` files
 - Use synchronous `fs.readdirSync` at construction time (one-time startup cost; no async needed)
 - `id` = filename without extension: `path.basename(file, '.md')`
-- `profilePath` = relative path from repo root: `tools/<category>/<tool-name>.md` (derived via `path.relative(path.join(__dirname, '..', '..', '..', '..'), fullFilePath)`)
+- `profilePath` = relative path from repo root: `data/tools/<category>/<tool-name>.md` (derived via `path.relative(path.join(__dirname, '..', '..', '..', '..'), fullFilePath)`)
 
 ### Error Handling
 

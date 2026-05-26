@@ -26,7 +26,7 @@ The specification is thorough and well-structured overall. The component APIs, a
 
 **Spec Reference** (`spec.md` line 438–439):
 ```
-Root: `path.join(process.cwd(), 'tools')` — `process.cwd()` is the backend working
+Root: `path.join(process.cwd(), 'data', 'tools')` — `process.cwd()` is the backend working
 directory (`src/backend/`)
 ```
 
@@ -35,21 +35,21 @@ directory (`src/backend/`)
 1. Confirmed with live shell from `src/backend/`:
    ```
    cwd: /Users/plucins/Projects/ai-tools-radar/src/backend
-   path.join(cwd, 'tools') → /Users/plucins/Projects/ai-tools-radar/src/backend/tools
+   path.join(cwd, 'data', 'tools') → /Users/plucins/Projects/ai-tools-radar/src/backend/data/tools
    fs.existsSync(...) → false
    ```
-2. The `tools/` directory is at the **repository root**: `/Users/plucins/Projects/ai-tools-radar/tools/cli/`  
-   (verified: `tools/cli/claude-code.md`, `github-copilot-cli.md`, `opencode.md` — all present)
-3. The correct relative path from `src/backend/` to `tools/` is `../../tools` (verified via `path.relative`).
+2. The `tools/` directory is at the **repository root** under `data/`: `/Users/plucins/Projects/ai-tools-radar/data/tools/cli/`  
+   (verified: `data/tools/cli/claude-code.md`, `github-copilot-cli.md`, `opencode.md` — all present)
+3. The correct relative path from `src/backend/` to `data/tools/` is `../../data/tools` (verified via `path.relative`).
 
 **Gap**: The spec's `process.cwd()` claim is wrong. Running `path.join(process.cwd(), 'tools')` from `src/backend/` resolves to a non-existent directory. The `ToolsService` will either throw `ENOENT` (if `readdirSync` is not guarded) or silently iterate an empty array depending on how the error handling is written — in either case, `GET /tools` returns `[]`.
 
 **Recommended fix**: Change spec to:
 ```typescript
 // Correct: navigate 2 levels up from src/backend/ to reach repo root
-const toolsRoot = path.join(process.cwd(), '..', '..', 'tools')
+const toolsRoot = path.join(process.cwd(), '..', '..', 'data', 'tools')
 ```
-Or equivalently: document that `process.cwd()` is **not** reliable across environments and recommend `__dirname`-based resolution (e.g. `path.join(__dirname, '..', '..', '..', '..', 'tools')`).  
+Or equivalently: document that `process.cwd()` is **not** reliable across environments and recommend `__dirname`-based resolution (e.g. `path.join(__dirname, '..', '..', '..', '..', 'data', 'tools')`).  
 
 The spec must also update the `profilePath` description (line 443) — if `process.cwd()` is `src/backend/`, "relative path from repo root" cannot be generated with `path.relative(process.cwd(), ...)`.
 
@@ -412,7 +412,7 @@ The following questions require stakeholder decisions before implementation begi
 
 ### Before implementation starts (blocking)
 
-1. **Fix C1**: Update spec line 438 to `path.join(process.cwd(), '..', '..', 'tools')` and re-derive `profilePath` consistently. Verify the path works in both `nest start` (from `src/backend/`) and `nest start:prod` (from `dist/`).
+1. **Fix C1**: Update spec line 438 to `path.join(process.cwd(), '..', '..', 'data', 'tools')` and re-derive `profilePath` consistently. Verify the path works in both `nest start` (from `src/backend/`) and `nest start:prod` (from `dist/`).
 
 2. **Resolve H1**: Update `analysis/ui-mockups.md` Mockup 6 state and Mockup 7 to reflect `pendingIds: Set<string>` (multi-select). Delete the "Only 1 tool can be staged" note.
 
@@ -448,7 +448,7 @@ The following areas are complete and implementation-ready:
 - ✅ `ComparisonStage` type and stage state machine (null → gathering → comparing → generating) complete  
 - ✅ Framer Motion animation specifications (initial/animate/exit values, stagger pattern)  
 - ✅ Backend `Tool` interface extension (`category`, `tags`, `profilePath`)  
-- ✅ YAML frontmatter format confirmed against actual `tools/cli/*.md` files (block scalar `>` correctly handled by `js-yaml`)  
+- ✅ YAML frontmatter format confirmed against actual `data/tools/cli/*.md` files (block scalar `>` correctly handled by `js-yaml`)  
 - ✅ Acceptance criteria are specific, testable, and cover all functional paths  
 - ✅ Test requirements for `tools.service.spec.ts` are detailed and behaviour-focused  
 - ✅ All new dependencies identified (`js-yaml`, `@types/js-yaml`, shadcn `dialog`/`input`/`skeleton`)  

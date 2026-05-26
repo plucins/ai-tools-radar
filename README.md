@@ -28,11 +28,12 @@ ai-tools-radar/
 ├── src/
 │   ├── backend/        # NestJS REST API (port 3000)
 │   └── frontend/       # React SPA (port 5173)
-└── tools/
-    ├── cli/            # CLI coding agents and terminal tools
-    ├── ide/            # IDE extensions and AI-first editors
-    ├── plugin/         # CI/CD and code review plugins
-    └── webapp/         # Browser-based AI tools
+└── data/
+    └── tools/
+        ├── cli/            # CLI coding agents and terminal tools
+        ├── ide/            # IDE extensions and AI-first editors
+        ├── plugin/         # CI/CD and code review plugins
+        └── webapp/         # Browser-based AI tools
 ```
 
 ---
@@ -138,7 +139,7 @@ To get real AI-generated comparisons instead of mock data:
 
 ## Adding a New Tool
 
-1. Create a Markdown file under `tools/<category>/<tool-name>.md`
+1. Create a Markdown file under `data/tools/<category>/<tool-name>.md`
 2. Follow the evidence-based profile format used by existing profiles
 3. Restart the backend (or rely on hot-reload)
 

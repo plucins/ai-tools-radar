@@ -20,7 +20,7 @@ The codebase has a strong architectural foundation with a NestJS backend, React/
 **`src/backend/src/tools/tools.service.ts`** (~20 lines)
 - Empty `private readonly tools: Tool[] = []` — no Markdown parsing
 - `Tool` interface only has `{id, name, description}` — missing `category`, `tags`, `profilePath`
-- Must be extended to read `tools/cli/*.md` files at startup and parse frontmatter
+- Must be extended to read `data/tools/cli/*.md` files at startup and parse frontmatter
 
 **`src/backend/src/tools/tools.controller.ts`** (~15 lines)
 - Exposes `GET /tools` and `GET /tools/:id`; structurally complete
@@ -54,7 +54,7 @@ The codebase has a strong architectural foundation with a NestJS backend, React/
 
 ### Related Files
 
-**`tools/cli/claude-code.md`**, **`tools/cli/github-copilot-cli.md`**, **`tools/cli/opencode.md`**
+**`data/tools/cli/claude-code.md`**, **`data/tools/cli/github-copilot-cli.md`**, **`data/tools/cli/opencode.md`**
 - All use identical frontmatter structure: `` ```json { name, description, category, tags } ``` `` in a fenced code block (not standard YAML frontmatter)
 - Must be parsed with a regex or custom parser (not `gray-matter` which expects `---` YAML)
 
@@ -116,7 +116,7 @@ The codebase has a strong architectural foundation with a NestJS backend, React/
 - Selection state correctly modeled with `Set<string>` (O(1) lookups, deduplication built-in)
 - Framer Motion is already installed; animation pattern established in `SidebarNavItem.tsx`
 - `CompareToolsDto` already enforces `@ArrayMinSize(2) @ArrayMaxSize(5)`
-- 3 real tool Markdown files in `tools/cli/` provide immediate test data
+- 3 real tool Markdown files in `data/tools/cli/` provide immediate test data
 
 ### Concerns
 - **Silent type cast bug in `api.ts`**: `{data, timestamp}` envelope is cast as `T` without unwrapping

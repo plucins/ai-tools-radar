@@ -24,7 +24,7 @@ All findings from `verification/spec-audit.md` have been resolved with the follo
 
 | Audit Finding | Decision |
 |---|---|
-| **C1** — `tools/` path wrong | Use `path.join(__dirname, '..', '..', '..', '..', 'tools')` — `__dirname` from `dist/src/tools/` |
+| **C1** — `data/tools/` path wrong | Use `path.join(__dirname, '..', '..', '..', '..', 'data', 'tools')` — `__dirname` from `dist/src/tools/` |
 | **H1** — Single vs multi-select | Follow `spec.md`: `pendingIds: Set<string>` (multi-select confirmed in requirements.md Phase 5) |
 | **H2** — `ComparisonModule` missing `ToolsModule` | Add `ToolsModule` to `comparison.module.ts` imports in Group 1 |
 | **H3** — Already-selected tools in modal | Follow `requirements.md`: show as **disabled/checked**, not hidden — pass `disabled={selectedIds.has(t.id)}` without filtering them out |
@@ -50,7 +50,7 @@ All findings from `verification/spec-audit.md` have been resolved with the follo
 
 - [x] 1.0 Complete backend blocker fixes
   - [x] 1.1 Write `tools.service.spec.ts` — 7 tests covering all parsing behaviours
-    - **Test 1**: `findAll() returns parsed tools from markdown files` — run against real `tools/**/*.md` in the repo; assert non-empty `Tool[]` with `id`, `name`, `category`, `tags` present
+    - **Test 1**: `findAll() returns parsed tools from markdown files` — run against real `data/tools/**/*.md` in the repo; assert non-empty `Tool[]` with `id`, `name`, `category`, `tags` present
     - **Test 2**: `findAll() generates id from filename slug` — `claude-code.md` → `id === 'claude-code'`
     - **Test 3**: `findAll() resolves js-yaml block scalar description` — multi-line `>` block scalar collapses to single-line string (no leading `\n`)
     - **Test 4**: `findOne(id) returns correct tool by id` — `findOne('claude-code')` returns tool with `name === 'Claude Code'`
@@ -79,12 +79,12 @@ All findings from `verification/spec-audit.md` have been resolved with the follo
   - [x] 1.5 Implement `ToolsService` — `src/backend/src/tools/tools.service.ts`
     - Extend `Tool` interface with `category: string`, `tags: string[]`, `profilePath?: string`
     - Add `private readonly tools: Tool[]` property; populate in constructor (synchronous, one-time)
-    - File discovery: `path.join(__dirname, '..', '..', '..', '..', 'tools')` — **do NOT use `process.cwd()`** (spec-audit C1)
+    - File discovery: `path.join(__dirname, '..', '..', '..', '..', 'data', 'tools')` — **do NOT use `process.cwd()`** (spec-audit C1)
     - Walk subdirectories one level: `fs.readdirSync(toolsRoot).forEach(subdir → readdirSync(subdir path))` — filter `.md` only
     - YAML extraction regex: `` /```yaml\n([\s\S]*?)```/ `` applied to raw file string; Group 1 is YAML string
     - Parse with `js-yaml.load(yamlString)` — resolves `>` block scalars automatically
     - ID: `path.basename(file, '.md')`
-    - `profilePath`: `path.relative(path.join(__dirname, '..', '..', '..', '..'), fullFilePath)` — yields `tools/cli/claude-code.md`
+    - `profilePath`: `path.relative(path.join(__dirname, '..', '..', '..', '..'), fullFilePath)` — yields `data/tools/cli/claude-code.md`
     - Error handling: wrap each file in try/catch; `Logger.warn()` on read error, YAML error, or missing required fields; skip file; **never throw**
     - Implement `findAll(): Tool[]` → returns `this.tools`
     - Implement `findOne(id: string): Tool` → find by id; throw `NotFoundException` if missing

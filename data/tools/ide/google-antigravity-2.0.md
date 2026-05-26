@@ -120,7 +120,7 @@ tags:
 
 - **Primary interface:** Standalone desktop application (macOS, Linux, Windows)
 - **Additional surfaces (same platform):**
-  - Antigravity CLI — terminal product surface (separate profile: `tools/cli/google-antigravity.md`)
+  - Antigravity CLI — terminal product surface (separate profile: `data/tools/cli/google-antigravity.md`)
   - Antigravity SDK — programmatic agent authoring
   - Managed Agents API — server-side agents via Gemini API Interactions API
   - Gemini Enterprise Agent Platform — enterprise Google Cloud deployment

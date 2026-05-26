@@ -19,10 +19,10 @@ Deployment decision: **GO**. All acceptance criteria verified through code inspe
 
 | | |
 |---|---|
-| **Claimed** | Backend reads `tools/**/*.md`, parses YAML front-matter, returns typed `Tool[]` |
+| **Claimed** | Backend reads `data/tools/**/*.md`, parses YAML front-matter, returns typed `Tool[]` |
 | **Reality** | ✅ Verified — fully working |
-| **Evidence** | `tools.service.ts` lines 40–116: `loadTools()` reads `toolsRoot`, iterates subdirs, extracts `\`\`\`yaml...\`\`\`` blocks via regex, validates required fields, returns `Tool[]`. `TransformInterceptor` wraps in `{ data, timestamp }`. 3 real tool files verified parseable: `tools/cli/claude-code.md`, `github-copilot-cli.md`, `opencode.md` — each has valid `name`, `description`, `category`, `tags` fields. |
-| **Path resolution** | ✅ `path.join(__dirname, '../../../..', 'tools')` resolves correctly from both source (`src/backend/src/tools/`) and compiled dist (`src/backend/dist/tools/`) to `{repo_root}/tools`. Verified with Node.js path resolution. |
+| **Evidence** | `tools.service.ts` lines 40–116: `loadTools()` reads `toolsRoot`, iterates subdirs, extracts `\`\`\`yaml...\`\`\`` blocks via regex, validates required fields, returns `Tool[]`. `TransformInterceptor` wraps in `{ data, timestamp }`. 3 real tool files verified parseable: `data/tools/cli/claude-code.md`, `github-copilot-cli.md`, `opencode.md` — each has valid `name`, `description`, `category`, `tags` fields. |
+| **Path resolution** | ✅ `path.join(__dirname, '../../../..', 'data', 'tools')` resolves correctly from both source (`src/backend/src/tools/`) and compiled dist (`src/backend/dist/tools/`) to `{repo_root}/data/tools`. Verified with Node.js path resolution. |
 
 ---
 

@@ -48,7 +48,7 @@ Behave as a **full-stack developer and technical analyst**. When working on appl
 - Environment-driven configuration — no secrets or hardcoded credentials in code
 - Consistent API contracts between frontend and backend
 
-When working on tool profiles (Markdown in `tools/`), prioritize:
+When working on tool profiles (Markdown in `data/tools/`), prioritize:
 - Evidence over assertion
 - Technical detail over marketing language
 - Workflow implications and operational impact
