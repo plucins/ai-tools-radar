@@ -12,4 +12,5 @@ export const envValidationSchema = Joi.object({
   OLLAMA_TIMEOUT_MS: Joi.number().default(120000),
   LLM_MODE: Joi.string().valid('mock', 'ollama').default('mock'),
   LOGO_DEV_PK: Joi.string().allow('').default(''),
+  COMPARISONS_DIR: Joi.string().default('./data/comparisons'),
 });
