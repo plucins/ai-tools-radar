@@ -1,6 +1,7 @@
-import { CheckCircle2, Lock, Loader2, Sparkles, Zap } from 'lucide-react'
+import { CheckCircle2, Lock, Sparkles, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { MagicLoader } from '@/components/comparison/MagicLoader'
 
 export type ComparisonStage = null | 'gathering' | 'comparing' | 'generating'
 
@@ -47,7 +48,7 @@ export function ComparisonPanel({ selectedCount, loading, stage, selectedModel, 
           aria-hidden="true"
         />
         <div className="relative flex flex-col items-center gap-6 text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Loading" />
+          <MagicLoader />
           <p className="text-lg font-semibold text-foreground">Comparing tools…</p>
 
           {/* Progress bar */}
