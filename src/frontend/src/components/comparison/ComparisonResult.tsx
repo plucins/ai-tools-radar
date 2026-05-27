@@ -65,13 +65,15 @@ export function ComparisonResult({ result }: ComparisonResultProps) {
       {/* Tabbed sections */}
       {result.sections.length > 0 ? (
         <Tabs defaultValue={result.sections[0]?.id}>
-          <TabsList className="flex-wrap h-auto gap-1">
-            {result.sections.map((section) => (
-              <TabsTrigger key={section.id} value={section.id}>
-                {section.title}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="overflow-x-auto">
+            <TabsList className="w-full">
+              {result.sections.map((section) => (
+                <TabsTrigger key={section.id} value={section.id}>
+                  {section.title}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
           {result.sections.map((section) => (
             <TabsContent key={section.id} value={section.id} className="mt-4">
               {section.summary && (
