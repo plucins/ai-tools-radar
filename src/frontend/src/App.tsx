@@ -5,6 +5,8 @@ import { ToolsPage } from './routes/ToolsPage'
 import { CatalogPage } from './routes/CatalogPage'
 import { ToolProfilePage } from './routes/ToolProfilePage'
 import { RadarPage } from './routes/RadarPage'
+import { MyComparisonsPage } from './routes/MyComparisonsPage'
+import { SavedComparisonPage } from './routes/SavedComparisonPage'
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
           <Route path="catalog" element={<CatalogPage />} />
           <Route path="catalog/:id" element={<ToolProfilePage />} />
           <Route path="radar" element={<RadarPage />} />
+          <Route path="comparisons" element={<MyComparisonsPage />} />
+          <Route path="comparisons/:id" element={<SavedComparisonPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

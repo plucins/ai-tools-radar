@@ -1,4 +1,4 @@
-import type { ComparisonRequest, ComparisonResult, ComparisonStreamEvent } from '@/types/comparison'
+import type { ComparisonRequest, ComparisonResult, ComparisonStreamEvent, SavedComparisonMeta } from '@/types/comparison'
 import type { Tool } from '@/types/tool'
 import type { ModelListResponse } from '@/types/model'
 import type { RadarData } from '@/types/radar'
@@ -76,6 +76,10 @@ export const api = {
       }).catch((err: unknown) => ctrl.error(err))
 
       return readable
+    },
+    history: {
+      list: () => request<SavedComparisonMeta[]>('/comparison/history'),
+      get: (id: string) => request<ComparisonResult>(`/comparison/history/${id}`),
     },
   },
   models: {
