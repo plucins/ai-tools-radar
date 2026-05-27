@@ -31,7 +31,11 @@ export class RadarService {
     const dist = Math.sqrt(tool.x * tool.x + tool.y * tool.y);
     if (dist <= ring.radius) return tool;
     const scale = (ring.radius * 0.98) / dist;
-    return { ...tool, x: Math.round(tool.x * scale * 100) / 100, y: Math.round(tool.y * scale * 100) / 100 };
+    return {
+      ...tool,
+      x: Math.round(tool.x * scale * 100) / 100,
+      y: Math.round(tool.y * scale * 100) / 100,
+    };
   }
 
   private buildRings(): RadarRingDto[] {
@@ -119,7 +123,8 @@ export class RadarService {
       {
         id: 'cursor',
         name: 'Cursor',
-        description: 'AI-first code editor built on VS Code with deep LLM integration',
+        description:
+          'AI-first code editor built on VS Code with deep LLM integration',
         x: 19.68,
         y: 25.68,
         ring: 'core',
@@ -130,7 +135,8 @@ export class RadarService {
       {
         id: 'claude',
         name: 'Claude',
-        description: 'Anthropic conversational AI for analysis, coding, and writing',
+        description:
+          'Anthropic conversational AI for analysis, coding, and writing',
         x: -43.36,
         y: 37.36,
         ring: 'adopt',
@@ -152,7 +158,8 @@ export class RadarService {
       {
         id: 'langchain',
         name: 'LangChain',
-        description: 'Framework for building LLM-powered applications and pipelines',
+        description:
+          'Framework for building LLM-powered applications and pipelines',
         x: -47.03,
         y: -46.03,
         ring: 'trial',
@@ -163,7 +170,8 @@ export class RadarService {
       {
         id: 'autogpt',
         name: 'AutoGPT',
-        description: 'Autonomous AI agent that decomposes and executes multi-step tasks',
+        description:
+          'Autonomous AI agent that decomposes and executes multi-step tasks',
         x: -74.71,
         y: -69.71,
         ring: 'watch',
@@ -174,7 +182,8 @@ export class RadarService {
       {
         id: 'midjourney',
         name: 'Midjourney',
-        description: 'Text-to-image AI generating photorealistic and artistic visuals',
+        description:
+          'Text-to-image AI generating photorealistic and artistic visuals',
         x: 56.03,
         y: -58.03,
         ring: 'trial',
@@ -185,7 +194,8 @@ export class RadarService {
       {
         id: 'figma-ai',
         name: 'Figma AI',
-        description: 'AI-assisted design features inside the Figma design platform',
+        description:
+          'AI-assisted design features inside the Figma design platform',
         x: 28.36,
         y: -29.36,
         ring: 'adopt',
@@ -196,7 +206,8 @@ export class RadarService {
       {
         id: 'copilot-chat',
         name: 'Copilot Chat',
-        description: 'Conversational AI interface within GitHub Copilot for code Q&A',
+        description:
+          'Conversational AI interface within GitHub Copilot for code Q&A',
         x: 70.71,
         y: 70.71,
         ring: 'watch',
@@ -207,7 +218,8 @@ export class RadarService {
       {
         id: 'ollama',
         name: 'Ollama',
-        description: 'Local LLM runner enabling offline inference with open-source models',
+        description:
+          'Local LLM runner enabling offline inference with open-source models',
         x: -10.68,
         y: -23.68,
         ring: 'core',
@@ -218,7 +230,8 @@ export class RadarService {
       {
         id: 'tabnine',
         name: 'Tabnine',
-        description: 'AI code completion tool supporting 30+ languages with privacy modes',
+        description:
+          'AI code completion tool supporting 30+ languages with privacy modes',
         x: 50.03,
         y: 58.03,
         ring: 'trial',
@@ -229,7 +242,8 @@ export class RadarService {
       {
         id: 'chatgpt',
         name: 'ChatGPT',
-        description: 'OpenAI conversational assistant for coding, research, and creative tasks',
+        description:
+          'OpenAI conversational assistant for coding, research, and creative tasks',
         x: -13.68,
         y: 16.68,
         ring: 'core',
@@ -240,7 +254,8 @@ export class RadarService {
       {
         id: 'zapier-ai',
         name: 'Zapier AI',
-        description: 'AI-powered workflow automation connecting apps without code',
+        description:
+          'AI-powered workflow automation connecting apps without code',
         x: -41.36,
         y: -42.36,
         ring: 'adopt',
@@ -251,7 +266,8 @@ export class RadarService {
       {
         id: 'adobe-firefly',
         name: 'Adobe Firefly',
-        description: 'Adobe generative AI for images, vectors, and design content',
+        description:
+          'Adobe generative AI for images, vectors, and design content',
         x: 71.71,
         y: -66.71,
         ring: 'watch',
@@ -262,7 +278,8 @@ export class RadarService {
       {
         id: 'codeium',
         name: 'Codeium',
-        description: 'Free AI code acceleration toolkit with autocomplete and search',
+        description:
+          'Free AI code acceleration toolkit with autocomplete and search',
         x: -62.71,
         y: 68.71,
         ring: 'watch',
@@ -273,7 +290,8 @@ export class RadarService {
       {
         id: 'v0-by-vercel',
         name: 'v0 by Vercel',
-        description: 'Generative UI tool producing React components from text prompts',
+        description:
+          'Generative UI tool producing React components from text prompts',
         x: 15.68,
         y: -25.68,
         ring: 'core',

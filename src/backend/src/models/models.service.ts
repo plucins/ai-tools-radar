@@ -5,10 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import {
-  ModelListResponse,
-  OllamaTagsResponse,
-} from './dto/model.dto';
+import { ModelListResponse, OllamaTagsResponse } from './dto/model.dto';
 
 @Injectable()
 export class ModelsService {

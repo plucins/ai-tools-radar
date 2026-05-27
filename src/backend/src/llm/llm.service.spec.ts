@@ -127,7 +127,7 @@ describe('LlmService', () => {
 
       // Assert
       expect(axiosSpy).toHaveBeenCalledTimes(1);
-      const calledUrl = axiosSpy.mock.calls[0][0] as string;
+      const calledUrl = axiosSpy.mock.calls[0][0];
       expect(calledUrl).toContain(BASE_URL);
     });
 
@@ -145,7 +145,9 @@ describe('LlmService', () => {
 
       // Assert
       expect(axiosSpy).toHaveBeenCalledTimes(1);
-      const calledConfig = axiosSpy.mock.calls[0][2] as { headers: Record<string, string> };
+      const calledConfig = axiosSpy.mock.calls[0][2] as {
+        headers: Record<string, string>;
+      };
       expect(calledConfig.headers['Authorization']).toBe(`Bearer ${API_KEY}`);
     });
 
@@ -155,7 +157,9 @@ describe('LlmService', () => {
       jest.spyOn(axios, 'post').mockRejectedValue(networkError);
 
       // Act & Assert
-      await expect(service.complete(sampleRequest)).rejects.toThrow(networkError);
+      await expect(service.complete(sampleRequest)).rejects.toThrow(
+        networkError,
+      );
     });
   });
 });

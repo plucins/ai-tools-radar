@@ -92,6 +92,9 @@ IMPORTANT: Do not invent tool capabilities not present in the documentation prov
     if (trimmed.length <= MAX_TOOL_CONTENT_CHARS) {
       return trimmed;
     }
-    return trimmed.slice(0, MAX_TOOL_CONTENT_CHARS) + '\n\n[... content truncated ...]';
+    return (
+      trimmed.slice(0, MAX_TOOL_CONTENT_CHARS) +
+      '\n\n[... content truncated ...]'
+    );
   }
 }

@@ -48,7 +48,9 @@ describe('ComparisonService', () => {
   let service: ComparisonService;
   let toolsService: jest.Mocked<Pick<ToolsService, 'findOne' | 'findAll'>>;
   let llmService: jest.Mocked<Pick<LlmService, 'complete'>>;
-  let promptBuilder: jest.Mocked<Pick<PromptBuilderService, 'buildComparisonMessages'>>;
+  let promptBuilder: jest.Mocked<
+    Pick<PromptBuilderService, 'buildComparisonMessages'>
+  >;
 
   beforeEach(async () => {
     const mockToolsService = {
@@ -160,7 +162,12 @@ describe('ComparisonService', () => {
   it('should include all 4 static section IDs in result.sections when LLM returns valid JSON with 4 sections (N-2)', async () => {
     // Arrange
     (toolsService.findOne as jest.Mock).mockImplementation(makeToolMock);
-    const staticSectionIds = ['features', 'pricing', 'integrations', 'limitations'];
+    const staticSectionIds = [
+      'features',
+      'pricing',
+      'integrations',
+      'limitations',
+    ];
     const llmJson = JSON.stringify({
       summary: 'Test summary.',
       recommendation: 'Test recommendation.',

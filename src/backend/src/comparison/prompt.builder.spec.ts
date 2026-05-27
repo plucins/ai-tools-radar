@@ -91,7 +91,8 @@ describe('PromptBuilderService', () => {
     const yamlTool = makeTool({
       id: 'tool-yaml',
       name: 'Yaml Tool',
-      content: '```yaml\nname: "foo"\nversion: "1.0"\n```\n\nActual tool description here.',
+      content:
+        '```yaml\nname: "foo"\nversion: "1.0"\n```\n\nActual tool description here.',
     });
 
     // Act

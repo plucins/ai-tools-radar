@@ -70,7 +70,11 @@ export class ComparisonService {
       model: dto.model || undefined,
     });
 
-    return this.parseAndValidateLlmResponse(llmResponse.text, toolMeta, toolIds);
+    return this.parseAndValidateLlmResponse(
+      llmResponse.text,
+      toolMeta,
+      toolIds,
+    );
   }
 
   async *compareStream(dto: CompareToolsDto): AsyncGenerator<StreamEvent> {
@@ -83,12 +87,19 @@ export class ComparisonService {
     const messages = this.promptBuilder.buildComparisonMessages(tools);
 
     let accumulated = '';
-    for await (const chunk of this.llmService.streamComplete({ messages, model: dto.model })) {
+    for await (const chunk of this.llmService.streamComplete({
+      messages,
+      model: dto.model,
+    })) {
       accumulated += chunk;
       yield { type: 'token', text: chunk };
     }
 
-    const result = this.parseAndValidateLlmResponse(accumulated, toolMeta, toolIds);
+    const result = this.parseAndValidateLlmResponse(
+      accumulated,
+      toolMeta,
+      toolIds,
+    );
     yield { type: 'done', result };
   }
 
@@ -107,7 +118,10 @@ export class ComparisonService {
     try {
       parsed = JSON.parse(stripped);
     } catch {
-      this.logger.error('LLM response is not valid JSON', stripped.slice(0, 200));
+      this.logger.error(
+        'LLM response is not valid JSON',
+        stripped.slice(0, 200),
+      );
       return this.buildFallback(raw, toolIds, toolMeta);
     }
 
@@ -136,9 +150,12 @@ export class ComparisonService {
       return {
         toolId: meta?.id ?? id,
         toolName: meta?.name ?? id,
-        bestFor: typeof fromLlm?.['bestFor'] === 'string' ? fromLlm['bestFor'] : '',
+        bestFor:
+          typeof fromLlm?.['bestFor'] === 'string' ? fromLlm['bestFor'] : '',
         notIdealFor:
-          typeof fromLlm?.['notIdealFor'] === 'string' ? fromLlm['notIdealFor'] : '',
+          typeof fromLlm?.['notIdealFor'] === 'string'
+            ? fromLlm['notIdealFor']
+            : '',
         keyDifferentiators: Array.isArray(fromLlm?.['keyDifferentiators'])
           ? (fromLlm['keyDifferentiators'] as unknown[]).filter(
               (s): s is string => typeof s === 'string',
@@ -150,25 +167,35 @@ export class ComparisonService {
     // Map sections → features → values; filter values to server-known toolIds only
     const sections: ComparisonSection[] = Array.isArray(obj['sections'])
       ? (obj['sections'] as Record<string, unknown>[])
-          .filter((s) => typeof s['id'] === 'string' && typeof s['title'] === 'string')
+          .filter(
+            (s) =>
+              typeof s['id'] === 'string' && typeof s['title'] === 'string',
+          )
           .map((s) => ({
             id: s['id'] as string,
             title: s['title'] as string,
-            summary: typeof s['summary'] === 'string' ? s['summary'] : undefined,
+            summary:
+              typeof s['summary'] === 'string' ? s['summary'] : undefined,
             features: Array.isArray(s['features'])
               ? (s['features'] as Record<string, unknown>[]).map((f) => ({
                   name: typeof f['name'] === 'string' ? f['name'] : '',
                   description:
-                    typeof f['description'] === 'string' ? f['description'] : undefined,
+                    typeof f['description'] === 'string'
+                      ? f['description']
+                      : undefined,
                   values: Array.isArray(f['values'])
                     ? (f['values'] as Record<string, unknown>[])
                         .filter((v) => toolIds.includes(v['toolId'] as string))
                         .map((v) => ({
                           toolId: v['toolId'] as string,
                           available:
-                            typeof v['available'] === 'boolean' ? v['available'] : false,
+                            typeof v['available'] === 'boolean'
+                              ? v['available']
+                              : false,
                           description:
-                            typeof v['description'] === 'string' ? v['description'] : '',
+                            typeof v['description'] === 'string'
+                              ? v['description']
+                              : '',
                         }))
                     : [],
                 }))
@@ -178,8 +205,8 @@ export class ComparisonService {
 
     return {
       tools: toolIds,
-      summary: obj['summary'] as string,
-      recommendation: obj['recommendation'] as string,
+      summary: obj['summary'],
+      recommendation: obj['recommendation'],
       generatedAt: new Date().toISOString(),
       toolSummaries,
       sections,
@@ -191,7 +218,9 @@ export class ComparisonService {
     toolIds: string[],
     toolMeta: Map<string, { id: string; name: string }>,
   ): ComparisonResult {
-    this.logger.warn('Using fallback comparison result due to unparseable LLM output');
+    this.logger.warn(
+      'Using fallback comparison result due to unparseable LLM output',
+    );
     return {
       tools: toolIds,
       summary: rawText.slice(0, 500),

@@ -53,20 +53,30 @@ export class LlmService {
     this.logger.log('LLM mock mode: returning placeholder response');
     return {
       text: JSON.stringify({
-        summary: 'Mock comparison summary: both tools offer strong AI coding assistance with different workflow integrations.',
-        recommendation: 'Use tool-a for autonomous workflows; use tool-b for interactive pair-programming.',
+        summary:
+          'Mock comparison summary: both tools offer strong AI coding assistance with different workflow integrations.',
+        recommendation:
+          'Use tool-a for autonomous workflows; use tool-b for interactive pair-programming.',
         toolSummaries: [
           {
             toolId: 'tool-a',
             bestFor: 'Teams wanting autonomous multi-step coding agents.',
             notIdealFor: 'Developers who prefer tight inline suggestion UX.',
-            keyDifferentiators: ['Agentic task execution', 'MCP tool support', 'Approval-based auto-run'],
+            keyDifferentiators: [
+              'Agentic task execution',
+              'MCP tool support',
+              'Approval-based auto-run',
+            ],
           },
           {
             toolId: 'tool-b',
             bestFor: 'Developers wanting deep codebase-aware completions.',
             notIdealFor: 'Teams requiring server-side enterprise controls.',
-            keyDifferentiators: ['Codebase indexing', 'Composer multi-file editing', 'Claude backend'],
+            keyDifferentiators: [
+              'Codebase indexing',
+              'Composer multi-file editing',
+              'Claude backend',
+            ],
           },
         ],
         sections: [
@@ -79,16 +89,34 @@ export class LlmService {
                 name: 'Inline completion',
                 description: 'Real-time code completion as you type.',
                 values: [
-                  { toolId: 'tool-a', available: true, description: 'Provides inline completions via IDE plugin.' },
-                  { toolId: 'tool-b', available: true, description: 'Ghost-text inline completions powered by Claude.' },
+                  {
+                    toolId: 'tool-a',
+                    available: true,
+                    description: 'Provides inline completions via IDE plugin.',
+                  },
+                  {
+                    toolId: 'tool-b',
+                    available: true,
+                    description:
+                      'Ghost-text inline completions powered by Claude.',
+                  },
                 ],
               },
               {
                 name: 'MCP support',
                 description: 'Model Context Protocol tool integration.',
                 values: [
-                  { toolId: 'tool-a', available: true, description: 'Full MCP server integration with approval flow.' },
-                  { toolId: 'tool-b', available: false, description: 'Not supported.' },
+                  {
+                    toolId: 'tool-a',
+                    available: true,
+                    description:
+                      'Full MCP server integration with approval flow.',
+                  },
+                  {
+                    toolId: 'tool-b',
+                    available: false,
+                    description: 'Not supported.',
+                  },
                 ],
               },
             ],
@@ -96,14 +124,23 @@ export class LlmService {
           {
             id: 'pricing',
             title: 'Pricing',
-            summary: 'Pricing models differ significantly between the two tools.',
+            summary:
+              'Pricing models differ significantly between the two tools.',
             features: [
               {
                 name: 'Free tier',
                 description: 'Whether a free usage tier is available.',
                 values: [
-                  { toolId: 'tool-a', available: true, description: 'Free tier available with limited requests.' },
-                  { toolId: 'tool-b', available: false, description: 'Paid plans only starting at $20/month.' },
+                  {
+                    toolId: 'tool-a',
+                    available: true,
+                    description: 'Free tier available with limited requests.',
+                  },
+                  {
+                    toolId: 'tool-b',
+                    available: false,
+                    description: 'Paid plans only starting at $20/month.',
+                  },
                 ],
               },
             ],
@@ -117,8 +154,16 @@ export class LlmService {
                 name: 'VS Code support',
                 description: 'Extension available for VS Code.',
                 values: [
-                  { toolId: 'tool-a', available: true, description: 'VS Code extension available.' },
-                  { toolId: 'tool-b', available: true, description: 'Native VS Code fork with deep integration.' },
+                  {
+                    toolId: 'tool-a',
+                    available: true,
+                    description: 'VS Code extension available.',
+                  },
+                  {
+                    toolId: 'tool-b',
+                    available: true,
+                    description: 'Native VS Code fork with deep integration.',
+                  },
                 ],
               },
             ],
@@ -126,14 +171,23 @@ export class LlmService {
           {
             id: 'limitations',
             title: 'Limitations',
-            summary: 'Each tool has meaningful limitations for certain workflows.',
+            summary:
+              'Each tool has meaningful limitations for certain workflows.',
             features: [
               {
                 name: 'Offline support',
                 description: 'Ability to run without internet.',
                 values: [
-                  { toolId: 'tool-a', available: false, description: 'Requires cloud connectivity.' },
-                  { toolId: 'tool-b', available: false, description: 'Cloud-dependent; no offline mode.' },
+                  {
+                    toolId: 'tool-a',
+                    available: false,
+                    description: 'Requires cloud connectivity.',
+                  },
+                  {
+                    toolId: 'tool-b',
+                    available: false,
+                    description: 'Cloud-dependent; no offline mode.',
+                  },
                 ],
               },
             ],
@@ -181,7 +235,9 @@ export class LlmService {
     };
   }
 
-  private async *chatStream(request: LlmCompletionRequest): AsyncGenerator<string> {
+  private async *chatStream(
+    request: LlmCompletionRequest,
+  ): AsyncGenerator<string> {
     const model = request.model ?? this.model;
     const url = `${this.baseUrl}/v1/chat/completions`;
 
