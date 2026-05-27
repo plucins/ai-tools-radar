@@ -25,7 +25,7 @@ This is a full-stack web application for browsing and comparing AI developer too
 
 **Frontend:**
 - React + TypeScript + Vite
-- Tailwind CSS + shadcn/ui
+- Tailwind CSS v4 + shadcn/ui
 - Environment-based API configuration (`VITE_API_BASE_URL`)
 
 **Backend:**

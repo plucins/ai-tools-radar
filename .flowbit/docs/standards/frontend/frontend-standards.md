@@ -6,9 +6,11 @@
 |---|---|
 | Framework | React 18 + TypeScript |
 | Build tool | Vite |
-| Styling | Tailwind CSS + shadcn/ui |
+| Styling | Tailwind CSS v4 + shadcn/ui |
 | State | React built-ins (useState, useContext); no global store unless justified |
 | HTTP | Native `fetch` or lightweight wrapper; base URL via `VITE_API_BASE_URL` |
+
+> **Tailwind v4 setup:** Config lives in `src/index.css` (`@import "tailwindcss"`, `@theme {}`, `@plugin`) — there is no `tailwind.config.js`. Vite uses `@tailwindcss/vite` plugin (not PostCSS). `autoprefixer` is not required. When adding new shadcn/ui components via `npx shadcn@latest add`, the generated syntax is correct for v4 — no manual patching needed.
 
 ## Component Structure
 
@@ -24,6 +26,8 @@ Before building any new UI component, check whether shadcn/ui already provides a
 1. Check the shadcn/ui component list: https://ui.shadcn.com/docs/components
 2. If a matching component exists → use it (add via `npx shadcn@latest add <component>` if not yet installed)
 3. If no match → only then create a custom component in `src/components/ui/` or the relevant feature directory
+
+> After running `npx shadcn@latest add <component>`, no syntax patching is needed — the project now runs Tailwind v4, which is fully compatible with shadcn-generated components.
 
 **Examples of shadcn/ui components to prefer:**
 - Buttons → `Button` (`@/components/ui/button`)
