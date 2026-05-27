@@ -2,7 +2,10 @@ import { CheckCircle2, Lock, Sparkles, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { MagicLoader } from '@/components/comparison/MagicLoader'
+import { ModelParamsPopover } from '@/components/comparison/ModelParamsPopover'
+import type { ModelParams } from '@/components/comparison/ModelParamsPopover'
 
+export type { ModelParams }
 export type ComparisonStage = null | 'gathering' | 'comparing' | 'generating'
 
 interface ComparisonPanelProps {
@@ -10,6 +13,8 @@ interface ComparisonPanelProps {
   loading: boolean
   stage: ComparisonStage
   selectedModel: string
+  modelParams: ModelParams
+  onParamsChange: (params: ModelParams) => void
   onCompare: () => void
 }
 
@@ -32,7 +37,7 @@ function getProgressWidth(stage: ComparisonStage): string {
   return 'w-0'
 }
 
-export function ComparisonPanel({ selectedCount, loading, stage, selectedModel, onCompare }: ComparisonPanelProps) {
+export function ComparisonPanel({ selectedCount, loading, stage, selectedModel, modelParams, onParamsChange, onCompare }: ComparisonPanelProps) {
   // State C: loading / in-progress
   if (loading) {
     const currentStageIndex = stage !== null ? STAGE_ORDER[stage] : -1
@@ -151,21 +156,42 @@ export function ComparisonPanel({ selectedCount, loading, stage, selectedModel, 
             Select a model in the sidebar to start comparing
           </p>
         )}
-        <button
-          onClick={canCompare ? onCompare : undefined}
-          disabled={!canCompare}
+        {/* Button group — pill-shaped container carries the gradient; inner divider separates CTA from settings */}
+        <div
           className={cn(
-            'flex h-14 w-full max-w-xs items-center justify-center gap-2 rounded-full px-8 font-semibold text-white transition-all',
+            'inline-flex h-14 overflow-hidden rounded-full border transition-all',
             canCompare
-              ? 'bg-gradient-to-r from-primary to-blue-600 shadow-[0_0_40px_hsl(var(--primary)/0.45)] hover:shadow-[0_0_60px_hsl(var(--primary)/0.6)] hover:scale-105 active:scale-100'
-              : 'cursor-not-allowed bg-primary/30 opacity-50',
+              ? 'border-primary/50 bg-gradient-to-r from-primary to-blue-600 shadow-[0_0_40px_hsl(var(--primary)/0.45)] hover:shadow-[0_0_60px_hsl(var(--primary)/0.6)]'
+              : 'border-primary/20 bg-primary/30 opacity-50',
           )}
-          aria-label="Start AI comparison"
-          aria-disabled={!canCompare}
         >
-          <Sparkles className="h-4 w-4" aria-hidden="true" />
-          Start Comparing
-        </button>
+          {/* Main CTA */}
+          <button
+            onClick={canCompare ? onCompare : undefined}
+            disabled={!canCompare}
+            className={cn(
+              'flex items-center justify-center gap-2 px-8 font-semibold text-white transition-colors',
+              canCompare
+                ? 'hover:bg-white/10 active:bg-white/20'
+                : 'cursor-not-allowed',
+            )}
+            aria-label="Start AI comparison"
+            aria-disabled={!canCompare}
+          >
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
+            Start Comparing
+          </button>
+
+          {/* Divider */}
+          <div className="w-px shrink-0 self-stretch bg-white/20" />
+
+          {/* Settings trigger — rendered inside the group */}
+          <ModelParamsPopover
+            params={modelParams}
+            onChange={onParamsChange}
+            disabled={!canCompare}
+          />
+        </div>
         <p className="flex items-center gap-1.5 text-xs text-muted-foreground/70">
           <Lock className="h-3 w-3" aria-hidden="true" />
           Private &amp; Local • Powered by Ollama

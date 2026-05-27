@@ -20,6 +20,8 @@ export class LlmService {
   private readonly model: string;
   private readonly apiKey: string;
   private readonly timeoutMs: number;
+  private readonly FIXED_SEED = 999;
+  private readonly FIXED_MAX_TOKENS = 10000;
 
   constructor(private readonly configService: ConfigService) {
     this.mode = this.configService.get<string>('ollama.mode') ?? 'mock';
@@ -224,7 +226,16 @@ export class LlmService {
 
     const response = await axios.post<OpenAIChatResponse>(
       url,
-      { model, messages: request.messages },
+      {
+        model,
+        messages: request.messages,
+        seed: this.FIXED_SEED,
+        max_tokens: this.FIXED_MAX_TOKENS,
+        ...(request.temperature !== undefined && { temperature: request.temperature }),
+        ...(request.top_p !== undefined && { top_p: request.top_p }),
+        ...(request.frequency_penalty !== undefined && { frequency_penalty: request.frequency_penalty }),
+        ...(request.presence_penalty !== undefined && { presence_penalty: request.presence_penalty }),
+      },
       { headers, timeout: this.timeoutMs },
     );
 
@@ -252,7 +263,17 @@ export class LlmService {
 
     const response = await axios.post<NodeJS.ReadableStream>(
       url,
-      { model, messages: request.messages, stream: true },
+      {
+        model,
+        messages: request.messages,
+        stream: true,
+        seed: this.FIXED_SEED,
+        max_tokens: this.FIXED_MAX_TOKENS,
+        ...(request.temperature !== undefined && { temperature: request.temperature }),
+        ...(request.top_p !== undefined && { top_p: request.top_p }),
+        ...(request.frequency_penalty !== undefined && { frequency_penalty: request.frequency_penalty }),
+        ...(request.presence_penalty !== undefined && { presence_penalty: request.presence_penalty }),
+      },
       { headers, timeout: this.timeoutMs, responseType: 'stream' },
     );
 

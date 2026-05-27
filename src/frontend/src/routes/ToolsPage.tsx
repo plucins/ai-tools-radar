@@ -3,6 +3,8 @@ import { useNavigate, useOutletContext } from 'react-router-dom'
 import { Plus, Sparkles, X } from 'lucide-react'
 import { ComparisonPanel } from '@/components/comparison/ComparisonPanel'
 import type { ComparisonStage } from '@/components/comparison/ComparisonPanel'
+import { DEFAULT_MODEL_PARAMS } from '@/components/comparison/ModelParamsPopover'
+import type { ModelParams } from '@/components/comparison/ModelParamsPopover'
 import { AddToolModal } from '@/components/tools/AddToolModal'
 import { ToolSlotGrid } from '@/components/tools/ToolSlotGrid'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -20,6 +22,7 @@ export function ToolsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [comparing, setComparing] = useState(false)
   const [stage, setStage] = useState<ComparisonStage>(null)
+  const [modelParams, setModelParams] = useState<ModelParams>(DEFAULT_MODEL_PARAMS)
   const stageTimers = useRef<ReturnType<typeof setTimeout>[]>([])
   const navigate = useNavigate()
   const { selectedModel } = useOutletContext<AppOutletContext>()
@@ -69,7 +72,7 @@ export function ToolsPage() {
 
     if (streamingEnabled) {
       navigate('/compare', {
-        state: { streaming: true, toolIds: [...selectedIds], model: selectedModel || undefined },
+        state: { streaming: true, toolIds: [...selectedIds], model: selectedModel || undefined, modelParams },
       })
       return
     }
@@ -83,6 +86,7 @@ export function ToolsPage() {
       const result = await api.comparison.compare({
         toolIds: [...selectedIds],
         model: selectedModel,
+        ...modelParams,
       })
       stageTimers.current.forEach(clearTimeout)
       stageTimers.current = []
@@ -169,6 +173,8 @@ export function ToolsPage() {
           loading={comparing}
           stage={stage}
           selectedModel={selectedModel}
+          modelParams={modelParams}
+          onParamsChange={setModelParams}
           onCompare={handleCompare}
         />
       )}
