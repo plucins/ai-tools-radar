@@ -4,20 +4,22 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { ComparisonResult } from '@/components/comparison/ComparisonResult'
 import { api } from '@/lib/api'
 import type { ComparisonRequest, ComparisonResult as ComparisonResultType } from '@/types/comparison'
+import type { ModelParams } from '@/components/comparison/ModelParamsPopover'
 
 interface ComparisonStreamViewProps {
   toolIds: string[]
   model?: string
+  modelParams?: ModelParams
 }
 
-export function ComparisonStreamView({ toolIds, model }: ComparisonStreamViewProps) {
+export function ComparisonStreamView({ toolIds, model, modelParams }: ComparisonStreamViewProps) {
   const [rawText, setRawText] = useState('')
   const [result, setResult] = useState<ComparisonResultType | null>(null)
   const [error, setError] = useState<string | null>(null)
   const scrollRef = useRef<HTMLPreElement>(null)
 
   useEffect(() => {
-    const body: ComparisonRequest = { toolIds, model }
+    const body: ComparisonRequest = { toolIds, model, ...modelParams }
     const stream = api.comparison.stream(body)
     const reader = stream.getReader()
     let cancelled = false
@@ -49,7 +51,7 @@ export function ComparisonStreamView({ toolIds, model }: ComparisonStreamViewPro
       cancelled = true
       void reader.cancel()
     }
-  }, [toolIds, model])
+  }, [toolIds, model, modelParams])
 
   // Auto-scroll to bottom while streaming
   useEffect(() => {

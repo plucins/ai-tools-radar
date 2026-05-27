@@ -68,6 +68,10 @@ export class ComparisonService {
     const llmResponse = await this.llmService.complete({
       messages,
       model: dto.model || undefined,
+      temperature: dto.temperature,
+      top_p: dto.top_p,
+      frequency_penalty: dto.frequency_penalty,
+      presence_penalty: dto.presence_penalty,
     });
 
     return this.parseAndValidateLlmResponse(
@@ -90,6 +94,10 @@ export class ComparisonService {
     for await (const chunk of this.llmService.streamComplete({
       messages,
       model: dto.model,
+      temperature: dto.temperature,
+      top_p: dto.top_p,
+      frequency_penalty: dto.frequency_penalty,
+      presence_penalty: dto.presence_penalty,
     })) {
       accumulated += chunk;
       yield { type: 'token', text: chunk };
