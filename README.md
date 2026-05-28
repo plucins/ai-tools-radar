@@ -55,7 +55,7 @@ The frontend and backend are managed as separate packages. Open two terminal win
 ### 1. Backend
 
 ```bash
-cd src/backend
+cd backend
 
 # First run: copy the example env file
 cp .env.example .env
@@ -86,7 +86,7 @@ OLLAMA_TIMEOUT_MS=120000
 ### 2. Frontend
 
 ```bash
-cd src/frontend
+cd frontend
 
 # First run: copy the example env file
 cp .env.example .env
@@ -117,7 +117,7 @@ To get real AI-generated comparisons instead of mock data:
    ```bash
    ollama pull llama3
    ```
-3. In `src/backend/.env`, set:
+3. In `backend/.env`, set:
    ```env
    LLM_MODE=ollama
    OLLAMA_MODEL=llama3
@@ -151,13 +151,13 @@ No backend code changes are required.
 
 ```bash
 # Backend unit tests
-cd src/backend && npm test
+cd backend && npm test
 
 # Backend e2e tests
-cd src/backend && npm run test:e2e
+cd backend && npm run test:e2e
 
 # Backend test coverage
-cd src/backend && npm run test:cov
+cd backend && npm run test:cov
 ```
 
 ---

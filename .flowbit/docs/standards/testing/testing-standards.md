@@ -56,8 +56,8 @@ Keep each test focused on one behaviour. Split into multiple `it` blocks rather 
 
 - All tests must pass before merging to `main`.
 - Test commands:
-  - Backend: `npm run test` (from `src/backend/`)
-  - Frontend: `npm run test` (from `src/frontend/`)
+  - Backend: `npm run test` (from `backend/`)
+  - Frontend: `npm run test` (from `frontend/`)
 - No `--watch` or `--only` flags in CI; run the full suite.
 - Test failures are blocking — do not merge with skipped (`xit`, `xdescribe`) tests unless explicitly documented with a linked issue.
 

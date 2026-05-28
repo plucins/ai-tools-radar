@@ -149,7 +149,7 @@ joi ^18.2.1
 ## Version Management
 
 - No workspace tooling (no `npm workspaces`, `nx`, or `turbo`)
-- Dependencies managed independently in `src/frontend/` and `src/backend/`
+- Dependencies managed independently in `frontend/` and `backend/`
 - Planned: evaluate `npm workspaces` or `turbo` for unified scripts at root
 
 ---

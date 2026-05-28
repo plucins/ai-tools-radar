@@ -30,7 +30,7 @@ export class ToolsService {
   constructor(@Optional() @Inject(TOOLS_ROOT) toolsRoot?: string) {
     const root =
       toolsRoot ??
-      path.join(__dirname, '..', '..', '..', '..', 'data', 'tools');
+      path.join(__dirname, '..', '..', '..', 'data', 'tools');
     this.tools = this.loadTools(root);
   }
 
@@ -48,7 +48,7 @@ export class ToolsService {
 
   private loadTools(toolsRoot: string): Tool[] {
     const tools: Tool[] = [];
-    const repoRoot = path.join(__dirname, '..', '..', '..', '..');
+    const repoRoot = path.join(__dirname, '..', '..', '..');
     const yamlRegex = /```yaml\n([\s\S]*?)```/;
 
     let subdirs: string[];
