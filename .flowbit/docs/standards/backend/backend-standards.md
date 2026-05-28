@@ -25,7 +25,7 @@ Each API feature has its own directory containing a dedicated `*.controller.ts`,
 ### DTO Files in `dto/` Subdirectory
 Backend DTOs live in a `dto/` subdirectory within their feature module and use the `.dto.ts` file suffix.
 - **Evidence**: 4/4 sampled DTO files follow this structure
-- **Example**: `src/backend/src/comparison/dto/compare-tools.dto.ts`
+- **Example**: `backend/src/comparison/dto/compare-tools.dto.ts`
 - **Confidence**: 84 (code-patterns)
 
 ## File Naming
@@ -121,7 +121,7 @@ Backend source files use relative imports for internal modules, never a path ali
 
 ### Single Quotes and Trailing Commas
 All backend TypeScript code uses single-quoted strings and trailing commas everywhere valid. Enforced by Prettier config.
-- **Evidence**: `src/backend/.prettierrc`: `singleQuote: true`, `trailingComma: all`
+- **Evidence**: `backend/.prettierrc`: `singleQuote: true`, `trailingComma: all`
 - **Confidence**: 85 (config)
 
 ### Prettier as ESLint Errors

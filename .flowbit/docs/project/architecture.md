@@ -14,8 +14,8 @@ The frontend follows a feature-based component organization: UI primitives in `c
 
 ## System Structure
 
-### Backend (`src/backend/`)
-- **Location**: `src/backend/src/`
+### Backend (`backend/`)
+- **Location**: `backend/src/`
 - **Purpose**: REST API, tool catalog, LLM orchestration
 - **Key Modules**:
   - `AppModule` — root module; registers config, global interceptor, exception filter
@@ -28,8 +28,8 @@ The frontend follows a feature-based component organization: UI primitives in `c
   - `TransformInterceptor` — wraps all success responses in uniform envelope
   - `AppConfig` + `OllamaConfig` — Joi-validated typed configuration
 
-### Frontend (`src/frontend/`)
-- **Location**: `src/frontend/src/`
+### Frontend (`frontend/`)
+- **Location**: `frontend/src/`
 - **Purpose**: SPA — tool catalog browser and comparison UI
 - **Key Files**:
   - `lib/api.ts` — typed HTTP client (uses `VITE_API_BASE_URL`)

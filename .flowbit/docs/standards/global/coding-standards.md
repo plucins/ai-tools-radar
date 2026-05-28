@@ -46,7 +46,7 @@ import { Injectable } from '@nestjs/common';
 Maintain clean module boundaries so the frontend never knows LLM implementation details. The `LlmService` is backend-internal; the frontend only sees API response shapes.
 
 ### Maintain Consistent API Contracts
-Keep API request/response shapes consistent between frontend and backend. Shared TypeScript interfaces (in `src/frontend/src/types/`) must mirror the backend's DTO shapes exactly.
+Keep API request/response shapes consistent between frontend and backend. Shared TypeScript interfaces (in `frontend/src/types/`) must mirror the backend's DTO shapes exactly.
 
 ## Git Hygiene
 
