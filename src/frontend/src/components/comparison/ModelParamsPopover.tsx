@@ -1,7 +1,8 @@
-import { Settings2 } from 'lucide-react'
+import { Settings2, Info } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Slider } from '@/components/ui/slider'
 import { Separator } from '@/components/ui/separator'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 export interface ModelParams {
@@ -20,6 +21,7 @@ export const DEFAULT_MODEL_PARAMS: ModelParams = {
 
 interface SliderRowProps {
   label: string
+  tooltip: string
   value: number
   min: number
   max: number
@@ -27,11 +29,21 @@ interface SliderRowProps {
   onChange: (v: number) => void
 }
 
-function SliderRow({ label, value, min, max, step, onChange }: SliderRowProps) {
+function SliderRow({ label, tooltip, value, min, max, step, onChange }: SliderRowProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-foreground">{label}</span>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="flex cursor-default items-center gap-1 text-xs font-medium text-foreground">
+              {label}
+              <Info className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
+            </span>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="max-w-52 text-xs leading-snug">
+            {tooltip}
+          </TooltipContent>
+        </Tooltip>
         <span className="min-w-[2.5rem] text-right text-xs tabular-nums text-primary">
           {value.toFixed(step < 1 ? 2 : 0)}
         </span>
@@ -112,6 +124,7 @@ export function ModelParamsPopover({ params, onChange, disabled, triggerClassNam
           <div className="space-y-5 px-5 py-5">
             <SliderRow
               label="Temperature"
+              tooltip="Controls the randomness of the output. Higher values (e.g. 1.0) make responses more creative and unpredictable, while lower values (e.g. 0.1) make them more focused and deterministic."
               value={params.temperature}
               min={0}
               max={1}
@@ -120,6 +133,7 @@ export function ModelParamsPopover({ params, onChange, disabled, triggerClassNam
             />
             <SliderRow
               label="Top P"
+              tooltip="Nucleus sampling threshold — only tokens whose cumulative probability reaches this value are considered. Lower values narrow the token pool for more conservative outputs; 1.0 disables the filter entirely."
               value={params.top_p}
               min={0}
               max={1}
@@ -128,6 +142,7 @@ export function ModelParamsPopover({ params, onChange, disabled, triggerClassNam
             />
             <SliderRow
               label="Frequency Penalty"
+              tooltip="Reduces the likelihood of repeating tokens that have already appeared in the output. Higher positive values discourage word repetition and encourage more varied phrasing."
               value={params.frequency_penalty}
               min={-2}
               max={2}
@@ -136,6 +151,7 @@ export function ModelParamsPopover({ params, onChange, disabled, triggerClassNam
             />
             <SliderRow
               label="Presence Penalty"
+              tooltip="Penalises tokens that have appeared at all in the text so far, regardless of how often. Positive values push the model to introduce new topics and concepts rather than dwelling on what was already said."
               value={params.presence_penalty}
               min={-2}
               max={2}
