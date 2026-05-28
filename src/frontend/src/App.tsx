@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { MainLayout } from './components/layout/MainLayout'
 import { ComparisonResultPage } from './routes/ComparisonResultPage'
 import { ToolsPage } from './routes/ToolsPage'
@@ -10,6 +11,7 @@ import { SavedComparisonPage } from './routes/SavedComparisonPage'
 
 export default function App() {
   return (
+    <TooltipProvider delayDuration={300}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
@@ -23,5 +25,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </TooltipProvider>
   )
 }
